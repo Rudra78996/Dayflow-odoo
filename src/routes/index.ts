@@ -4,6 +4,11 @@ import { profileRouter } from "../modules/profile/profile.routes.js";
 import { attendanceRouter } from "../modules/attendance/attendance.routes.js";
 import { payrollRouter } from "../modules/payroll/payroll.routes.js";
 import { leaveRouter } from "../modules/leave/leave.routes.js";
+import {
+  dashboardRouter,
+  notificationsRouter,
+  reportsRouter,
+} from "../modules/dashboard/dashboard.routes.js";
 
 const router = Router();
 
@@ -12,5 +17,8 @@ router.use("/profile", profileRouter);
 router.use("/attendance", attendanceRouter);
 router.use("/payroll", payrollRouter);
 router.use("/leave", leaveRouter);
+router.use("/dashboard", dashboardRouter);
+router.use("/notifications", notificationsRouter);
+router.use("/reports", reportsRouter);
 
 export default router;
