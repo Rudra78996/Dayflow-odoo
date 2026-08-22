@@ -1,0 +1,61 @@
+name: dayflow-production
+
+services:
+  api:
+    image: ${DAYFLOW_API_IMAGE:?set DAYFLOW_API_IMAGE to an immutable image digest}
+    restart: unless-stopped
+    env_file:
+      - ${DAYFLOW_API_ENV_FILE:-./production.api.env.example}
+    ports:
+      - "127.0.0.1:3001:3001"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3001/v1/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    stop_grace_period: 30s
+
+  web:
+    image: ${DAYFLOW_WEB_IMAGE:?set DAYFLOW_WEB_IMAGE to an immutable image digest}
+    restart: unless-stopped
+    environment:
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:3000:3000"
+    read_only: true
+    tmpfs:
+      - /tmp:size=64m,mode=1777
+    cap_drop: [ALL]
+    security_opt:
+      - no-new-privileges:true
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/sign-in').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 15s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+    stop_grace_period: 30s
+
+# Put a TLS-terminating reverse proxy/load balancer in front of both services.
+# The database, object storage, email provider, secrets, and telemetry backends
+# are intentionally external and must be provisioned through the chosen platform.

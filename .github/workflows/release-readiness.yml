@@ -1,0 +1,112 @@
+name: Release readiness
+
+on:
+  workflow_dispatch:
+    inputs:
+      staging_api_url:
+        description: Authorized staging API base ending in /v1 (never production)
+        required: false
+        type: string
+  schedule:
+    - cron: "17 3 * * 1"
+
+permissions:
+  contents: read
+
+jobs:
+  sast:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: github/codeql-action/init@v4
+        with:
+          languages: javascript-typescript
+          build-mode: none
+      - uses: github/codeql-action/analyze@v4
+
+  high-severity-dependency-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      # Unlike pull-request CI, release readiness permits no High advisory.
+      # This is expected to remain red while the documented Prisma advisory exists.
+      - run: npm run security:dependencies
+
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+
+  container-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - name: api
+            dockerfile: deploy/api.Dockerfile
+            build_args: ""
+          - name: web
+            dockerfile: deploy/web.Dockerfile
+            build_args: |
+              NEXT_PUBLIC_API_URL=https://api.dayflow.invalid/v1
+              DEPLOYMENT_VERSION=readiness-scan
+    steps:
+      - uses: actions/checkout@v4
+      - uses: docker/setup-buildx-action@v3
+      - uses: docker/build-push-action@v6
+        with:
+          context: .
+          file: ${{ matrix.dockerfile }}
+          push: false
+          load: true
+          tags: dayflow-${{ matrix.name }}:readiness
+          build-args: ${{ matrix.build_args }}
+      - uses: aquasecurity/trivy-action@0.32.0
+        with:
+          image-ref: dayflow-${{ matrix.name }}:readiness
+          format: table
+          exit-code: "1"
+          ignore-unfixed: true
+          severity: CRITICAL,HIGH
+
+  public-accessibility-and-performance:
+    runs-on: ubuntu-latest
+    env:
+      NEXT_PUBLIC_API_URL: https://api.dayflow.invalid/v1
+      DEPLOYMENT_VERSION: readiness-audit
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npm run build --workspace @dayflow/web
+      - uses: treosh/lighthouse-ci-action@v12
+        with:
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: false
+
+  authorized-staging-dast:
+    if: github.event_name == 'workflow_dispatch' && inputs.staging_api_url != ''
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: zaproxy/action-api-scan@v0.10.0
+        with:
+          target: ${{ inputs.staging_api_url }}/docs-json
+          format: openapi
+          allow_issue_writing: false
+          fail_action: true
