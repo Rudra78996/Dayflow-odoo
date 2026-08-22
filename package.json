@@ -1,0 +1,38 @@
+{
+  "name": "dayflow",
+  "version": "0.1.0",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=24.0.0"
+  },
+  "scripts": {
+    "build": "npm run build --workspace @dayflow/api && npm run build --workspace @dayflow/web",
+    "dev": "npm run dev --workspace @dayflow/web",
+    "dev:api": "npm run start:dev --workspace @dayflow/api",
+    "lint": "npm run lint --workspace @dayflow/api && npm run lint --workspace @dayflow/web",
+    "test": "npm run test --workspace @dayflow/api -- --runInBand",
+    "test:e2e": "npm run test:e2e --workspace @dayflow/api -- --runInBand",
+    "typecheck": "npm run typecheck --workspace @dayflow/contracts && npm run typecheck --workspace @dayflow/api && npm run typecheck --workspace @dayflow/web",
+    "db:generate": "npm run db:generate --workspace @dayflow/api",
+    "db:validate": "npm run db:validate --workspace @dayflow/api",
+    "db:migrate:deploy": "npm run db:migrate:deploy --workspace @dayflow/api",
+    "db:migrate:drift": "npm run db:migrate:drift --workspace @dayflow/api",
+    "db:seed": "npm run db:seed --workspace @dayflow/api",
+    "db:seed:user": "npm run db:seed:user --workspace @dayflow/api",
+    "smoke": "node scripts/smoke.mjs",
+    "test:load-smoke": "node scripts/load-smoke.mjs",
+    "security:env": "node scripts/verify-production-env.mjs",
+    "security:dependencies": "npm audit --omit=dev --audit-level=high",
+    "backup:postgres": "bash scripts/backup-postgres.sh",
+    "restore:postgres": "bash scripts/restore-postgres.sh"
+  },
+  "allowScripts": {
+    "@prisma/engines@7.9.1": true,
+    "argon2@0.45.1": true,
+    "prisma@7.9.1": true
+  }
+}

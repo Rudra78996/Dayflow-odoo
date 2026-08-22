@@ -1,0 +1,35 @@
+# Dependencies
+node_modules/
+.npm/
+
+# Build output
+.next/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Environment and secrets
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# Prisma and local databases
+*.db
+*.db-journal
+
+# Test and tooling
+playwright-report/
+test-results/
+.lighthouseci/
+backups/
+.turbo/
+
+# Local production deployment material
+deploy/production.api.env
+
+# OS and editors
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
