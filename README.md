@@ -10,6 +10,38 @@ Dayflow is a multi-tenant HRMS delivered through the gates in [the implementatio
 
 ## Local setup
 
+### Run everything with Docker Compose
+
+```bash
+cp .env.example .env
+docker compose up --build
+```
+
+Compose builds the Next.js and NestJS images, starts PostgreSQL, waits for it to
+become healthy, applies every Prisma migration once, then starts the API and web
+containers. Open `http://localhost:3002`; Swagger is available at
+`http://localhost:3001/v1/docs`.
+
+Useful lifecycle commands:
+
+```bash
+docker compose up --build -d
+docker compose ps
+docker compose logs -f api web
+docker compose down
+docker compose down --volumes # Also permanently deletes local database data.
+```
+
+Use `DAYFLOW_WEB_PORT`, `DAYFLOW_API_PORT`, and `DAYFLOW_DB_PORT` in `.env` to
+change host ports. The browser-facing API URL is embedded while the web image is
+built, so rebuild `web` after changing `DAYFLOW_API_PORT`.
+
+Gmail OAuth and object-storage values are passed from `.env` at container runtime.
+The Compose defaults are development-only and must not be used as production
+secrets. The hardened production image example remains under `deploy/`.
+
+### Run application processes on the host
+
 ```bash
 cp .env.example .env
 npm ci
@@ -24,7 +56,7 @@ In another terminal:
 npm run dev
 ```
 
-Open `http://localhost:3000`. The API runs on `http://localhost:3001`; Swagger is at `http://localhost:3001/v1/docs`.
+Open `http://localhost:3002`. The API runs on `http://localhost:3001`; Swagger is at `http://localhost:3001/v1/docs`.
 
 The web workspace reads `NEXT_PUBLIC_API_URL` at build time. For local development
 the application safely defaults to `http://localhost:3001/v1`; for deployment, set

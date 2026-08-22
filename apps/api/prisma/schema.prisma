@@ -514,7 +514,6 @@ model FileObject {
   organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   employee       Employee?          @relation(fields: [employeeId], references: [id], onDelete: Cascade)
   certification Certification?      @relation("CertificationFile")
-  leaveEvidence LeaveRequest?       @relation("LeaveEvidence")
 
   @@index([organizationId, employeeId])
   @@index([organizationId, scanStatus])
@@ -663,7 +662,6 @@ model LeaveType {
   name                String       @db.VarChar(120)
   paid                Boolean
   color                String       @db.VarChar(20)
-  attachmentAfterUnits Decimal?    @db.Decimal(5, 2)
   halfDaySupported     Boolean      @default(true)
   approvalRequired    Boolean      @default(true)
   allowNegative       Boolean      @default(false)
@@ -718,7 +716,6 @@ model LeaveRequest {
   endSession     DaySession         @default(FULL_DAY)
   requestedUnits Decimal            @db.Decimal(6, 2)
   remarks        String?            @db.VarChar(2000)
-  evidenceFileId String?            @unique @db.Uuid
   status         LeaveRequestStatus @default(PENDING)
   decisionComment String?           @db.VarChar(1000)
   requestedById  String             @db.Uuid
@@ -731,7 +728,6 @@ model LeaveRequest {
   organization   Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
   employee       Employee           @relation(fields: [employeeId], references: [id], onDelete: Restrict)
   leaveType      LeaveType          @relation(fields: [leaveTypeId], references: [id], onDelete: Restrict)
-  evidenceFile   FileObject?        @relation("LeaveEvidence", fields: [evidenceFileId], references: [id], onDelete: SetNull)
   ledgerEntries  LeaveLedgerEntry[]
 
   @@index([organizationId, employeeId, startDate, endDate])

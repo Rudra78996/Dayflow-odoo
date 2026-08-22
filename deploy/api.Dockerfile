@@ -19,6 +19,10 @@ COPY packages/contracts packages/contracts
 RUN DIRECT_URL=postgresql://build:build@127.0.0.1:5432/build npm run db:generate --workspace @dayflow/api \
   && npm run build --workspace @dayflow/api
 
+FROM build AS migration
+ENV NODE_ENV=production
+CMD ["npm", "run", "db:migrate:deploy", "--workspace", "@dayflow/api"]
+
 FROM node:24-bookworm-slim@sha256:3638d9a6fe4030bd716be989438248074489337ba3275657f93595428be4fc03 AS runtime
 ENV NODE_ENV=production \
     API_PORT=3001

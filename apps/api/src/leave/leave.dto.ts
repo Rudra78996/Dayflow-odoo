@@ -20,11 +20,6 @@ export class CreateLeaveTypeDto {
   @IsString() @Length(1, 120) name!: string;
   @IsBoolean() paid!: boolean;
   @IsString() @Length(4, 20) color!: string;
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0.5)
-  attachmentAfterUnits?: number;
   @IsOptional() @IsBoolean() halfDaySupported = true;
   @IsOptional() @IsBoolean() approvalRequired = true;
   @IsOptional() @IsBoolean() allowNegative = false;
@@ -36,11 +31,6 @@ export class UpdateLeaveTypeDto {
   @IsOptional() @IsBoolean() paid?: boolean;
   @IsOptional() @IsBoolean() active?: boolean;
   @IsOptional() @IsBoolean() allowNegative?: boolean;
-  @IsOptional()
-  @Type(() => Number)
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Min(0.5)
-  attachmentAfterUnits?: number;
 }
 export class CreateLeavePolicyDto {
   @IsUUID() leaveTypeId!: string;
@@ -96,7 +86,6 @@ export class CreateLeaveRequestDto {
   @IsOptional() @IsEnum(DaySession) endSession: DaySession =
     DaySession.FULL_DAY;
   @IsOptional() @IsString() @MaxLength(2000) remarks?: string;
-  @IsOptional() @IsUUID() evidenceFileId?: string;
 }
 export class LeaveRequestQueryDto {
   @IsOptional()

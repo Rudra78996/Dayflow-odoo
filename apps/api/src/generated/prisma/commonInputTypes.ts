@@ -616,6 +616,13 @@ export type EnumAttendanceCorrectionStatusWithAggregatesFilter<$PrismaModel = ne
   _max?: Prisma.NestedEnumAttendanceCorrectionStatusFilter<$PrismaModel>
 }
 
+export type EnumLeaveAccrualFrequencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
+}
+
 export type DecimalNullableFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
@@ -625,6 +632,16 @@ export type DecimalNullableFilter<$PrismaModel = never> = {
   gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
   gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
   not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
+export type EnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
 }
 
 export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -641,23 +658,6 @@ export type DecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
-}
-
-export type EnumLeaveAccrualFrequencyFilter<$PrismaModel = never> = {
-  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
-}
-
-export type EnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
 }
 
 export type EnumDaySessionFilter<$PrismaModel = never> = {
@@ -1387,6 +1387,13 @@ export type NestedEnumAttendanceCorrectionStatusWithAggregatesFilter<$PrismaMode
   _max?: Prisma.NestedEnumAttendanceCorrectionStatusFilter<$PrismaModel>
 }
 
+export type NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
+}
+
 export type NestedDecimalNullableFilter<$PrismaModel = never> = {
   equals?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel> | null
   in?: runtime.Decimal[] | runtime.DecimalJsLike[] | number[] | string[] | Prisma.ListDecimalFieldRefInput<$PrismaModel> | null
@@ -1396,6 +1403,16 @@ export type NestedDecimalNullableFilter<$PrismaModel = never> = {
   gt?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
   gte?: runtime.Decimal | runtime.DecimalJsLike | number | string | Prisma.DecimalFieldRefInput<$PrismaModel>
   not?: Prisma.NestedDecimalNullableFilter<$PrismaModel> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
+}
+
+export type NestedEnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
 }
 
 export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -1412,23 +1429,6 @@ export type NestedDecimalNullableWithAggregatesFilter<$PrismaModel = never> = {
   _sum?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
   _min?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
   _max?: Prisma.NestedDecimalNullableFilter<$PrismaModel>
-}
-
-export type NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel = never> = {
-  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
-}
-
-export type NestedEnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.LeaveAccrualFrequency | Prisma.EnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  in?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  notIn?: $Enums.LeaveAccrualFrequency[] | Prisma.ListEnumLeaveAccrualFrequencyFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumLeaveAccrualFrequencyWithAggregatesFilter<$PrismaModel> | $Enums.LeaveAccrualFrequency
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumLeaveAccrualFrequencyFilter<$PrismaModel>
 }
 
 export type NestedEnumDaySessionFilter<$PrismaModel = never> = {

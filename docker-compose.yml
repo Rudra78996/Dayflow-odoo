@@ -1,19 +1,128 @@
+name: dayflow
+
 services:
   postgres:
     image: postgres:17-alpine
+    restart: unless-stopped
     environment:
       POSTGRES_DB: dayflow
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${DAYFLOW_DB_PASSWORD:-postgres}
     ports:
-      - "${DAYFLOW_DB_PORT:-5433}:5432"
+      - "127.0.0.1:${DAYFLOW_DB_PORT:-5433}:5432"
+    volumes:
+      - dayflow-postgres-v17:/var/lib/postgresql/data
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres -d dayflow"]
       interval: 5s
       timeout: 5s
-      retries: 10
-    volumes:
-      - dayflow-postgres-v17:/var/lib/postgresql/data
+      retries: 12
+      start_period: 5s
+    networks:
+      - dayflow
+
+  migrate:
+    build:
+      context: .
+      dockerfile: deploy/api.Dockerfile
+      target: migration
+    restart: "no"
+    environment:
+      DIRECT_URL: postgresql://postgres:${DAYFLOW_DB_PASSWORD:-postgres}@postgres:5432/dayflow
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - dayflow
+
+  api:
+    build:
+      context: .
+      dockerfile: deploy/api.Dockerfile
+      target: runtime
+    restart: unless-stopped
+    init: true
+    environment:
+      NODE_ENV: development
+      API_PORT: "3001"
+      DATABASE_URL: postgresql://postgres:${DAYFLOW_DB_PASSWORD:-postgres}@postgres:5432/dayflow
+      DIRECT_URL: postgresql://postgres:${DAYFLOW_DB_PASSWORD:-postgres}@postgres:5432/dayflow
+      WEB_ORIGIN: http://localhost:${DAYFLOW_WEB_PORT:-3002}
+      WEB_APP_URL: http://localhost:${DAYFLOW_WEB_PORT:-3002}
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET:-local-compose-access-secret-change-before-deployment}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET:-local-compose-refresh-secret-change-before-deployment}
+      DATA_ENCRYPTION_KEY: ${DATA_ENCRYPTION_KEY:-local-compose-encryption-secret-change-before-deployment}
+      ACCESS_TOKEN_TTL: ${ACCESS_TOKEN_TTL:-15m}
+      REFRESH_TOKEN_TTL_DAYS: ${REFRESH_TOKEN_TTL_DAYS:-30}
+      COOKIE_SECURE: "false"
+      EMAIL_PROVIDER: ${EMAIL_PROVIDER:-console}
+      EMAIL_FROM: ${EMAIL_FROM:-}
+      GMAIL_SENDER_EMAIL: ${GMAIL_SENDER_EMAIL:-}
+      GOOGLE_CLIENT_ID: ${GOOGLE_CLIENT_ID:-}
+      GOOGLE_CLIENT_SECRET: ${GOOGLE_CLIENT_SECRET:-}
+      GOOGLE_REFRESH_TOKEN: ${GOOGLE_REFRESH_TOKEN:-}
+      OBJECT_STORAGE_ENDPOINT: ${OBJECT_STORAGE_ENDPOINT:-}
+      OBJECT_STORAGE_REGION: ${OBJECT_STORAGE_REGION:-auto}
+      OBJECT_STORAGE_BUCKET: ${OBJECT_STORAGE_BUCKET:-dayflow-development}
+      OBJECT_STORAGE_ACCESS_KEY_ID: ${OBJECT_STORAGE_ACCESS_KEY_ID:-}
+      OBJECT_STORAGE_SECRET_ACCESS_KEY: ${OBJECT_STORAGE_SECRET_ACCESS_KEY:-}
+      FILE_SCANNER_WEBHOOK_SECRET: ${FILE_SCANNER_WEBHOOK_SECRET:-local-compose-scanner-secret-change-before-deployment}
+    ports:
+      - "127.0.0.1:${DAYFLOW_API_PORT:-3001}:3001"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3001/v1/health/ready').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    networks:
+      - dayflow
+
+  web:
+    build:
+      context: .
+      dockerfile: deploy/web.Dockerfile
+      target: runtime
+      args:
+        NEXT_PUBLIC_API_URL: http://localhost:${DAYFLOW_API_PORT:-3001}/v1
+        DEPLOYMENT_VERSION: ${DEPLOYMENT_VERSION:-local-compose}
+    restart: unless-stopped
+    init: true
+    environment:
+      PORT: "3000"
+      HOSTNAME: 0.0.0.0
+    ports:
+      - "127.0.0.1:${DAYFLOW_WEB_PORT:-3002}:3000"
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "node",
+          "-e",
+          "fetch('http://127.0.0.1:3000/sign-in').then(r=>{if(!r.ok)process.exit(1)}).catch(()=>process.exit(1))",
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 10s
+    networks:
+      - dayflow
 
 volumes:
   dayflow-postgres-v17:
+
+networks:
+  dayflow:
+    driver: bridge

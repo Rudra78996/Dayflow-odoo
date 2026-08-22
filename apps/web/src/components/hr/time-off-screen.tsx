@@ -8,7 +8,6 @@ import {
   ChevronLeftIcon,
   ChevronRightIcon,
   CircleDollarSignIcon,
-  FileUpIcon,
   PlusIcon,
   SearchIcon,
   UmbrellaIcon,
@@ -228,21 +227,6 @@ function LeaveRequestDialog({
               <FieldDescription>
                 Requested units are calculated by the server from these dates,
                 weekends, holidays, and the active policy.
-              </FieldDescription>
-            </Field>
-            <Field>
-              <FieldLabel htmlFor="attachment">Supporting document</FieldLabel>
-              <Input
-                id="attachment"
-                name="attachment"
-                type="file"
-                accept=".pdf,image/jpeg,image/png,image/webp"
-                disabled
-              />
-              <FieldDescription>
-                <FileUpIcon className="mr-1 inline size-3.5" />
-                Secure evidence upload activates when the file service is
-                configured.
               </FieldDescription>
             </Field>
             <Field data-invalid={Boolean(error)}>

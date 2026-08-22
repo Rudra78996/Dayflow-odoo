@@ -47,7 +47,6 @@ export type LeaveRequestMinAggregateOutputType = {
   endSession: $Enums.DaySession | null
   requestedUnits: runtime.Decimal | null
   remarks: string | null
-  evidenceFileId: string | null
   status: $Enums.LeaveRequestStatus | null
   decisionComment: string | null
   requestedById: string | null
@@ -70,7 +69,6 @@ export type LeaveRequestMaxAggregateOutputType = {
   endSession: $Enums.DaySession | null
   requestedUnits: runtime.Decimal | null
   remarks: string | null
-  evidenceFileId: string | null
   status: $Enums.LeaveRequestStatus | null
   decisionComment: string | null
   requestedById: string | null
@@ -93,7 +91,6 @@ export type LeaveRequestCountAggregateOutputType = {
   endSession: number
   requestedUnits: number
   remarks: number
-  evidenceFileId: number
   status: number
   decisionComment: number
   requestedById: number
@@ -128,7 +125,6 @@ export type LeaveRequestMinAggregateInputType = {
   endSession?: true
   requestedUnits?: true
   remarks?: true
-  evidenceFileId?: true
   status?: true
   decisionComment?: true
   requestedById?: true
@@ -151,7 +147,6 @@ export type LeaveRequestMaxAggregateInputType = {
   endSession?: true
   requestedUnits?: true
   remarks?: true
-  evidenceFileId?: true
   status?: true
   decisionComment?: true
   requestedById?: true
@@ -174,7 +169,6 @@ export type LeaveRequestCountAggregateInputType = {
   endSession?: true
   requestedUnits?: true
   remarks?: true
-  evidenceFileId?: true
   status?: true
   decisionComment?: true
   requestedById?: true
@@ -284,7 +278,6 @@ export type LeaveRequestGroupByOutputType = {
   endSession: $Enums.DaySession
   requestedUnits: runtime.Decimal
   remarks: string | null
-  evidenceFileId: string | null
   status: $Enums.LeaveRequestStatus
   decisionComment: string | null
   requestedById: string
@@ -330,7 +323,6 @@ export type LeaveRequestWhereInput = {
   endSession?: Prisma.EnumDaySessionFilter<"LeaveRequest"> | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFilter<"LeaveRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.StringNullableFilter<"LeaveRequest"> | string | null
-  evidenceFileId?: Prisma.UuidNullableFilter<"LeaveRequest"> | string | null
   status?: Prisma.EnumLeaveRequestStatusFilter<"LeaveRequest"> | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.StringNullableFilter<"LeaveRequest"> | string | null
   requestedById?: Prisma.UuidFilter<"LeaveRequest"> | string
@@ -343,7 +335,6 @@ export type LeaveRequestWhereInput = {
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   leaveType?: Prisma.XOR<Prisma.LeaveTypeScalarRelationFilter, Prisma.LeaveTypeWhereInput>
-  evidenceFile?: Prisma.XOR<Prisma.FileObjectNullableScalarRelationFilter, Prisma.FileObjectWhereInput> | null
   ledgerEntries?: Prisma.LeaveLedgerEntryListRelationFilter
 }
 
@@ -358,7 +349,6 @@ export type LeaveRequestOrderByWithRelationInput = {
   endSession?: Prisma.SortOrder
   requestedUnits?: Prisma.SortOrder
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
-  evidenceFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   decisionComment?: Prisma.SortOrderInput | Prisma.SortOrder
   requestedById?: Prisma.SortOrder
@@ -371,13 +361,11 @@ export type LeaveRequestOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
   leaveType?: Prisma.LeaveTypeOrderByWithRelationInput
-  evidenceFile?: Prisma.FileObjectOrderByWithRelationInput
   ledgerEntries?: Prisma.LeaveLedgerEntryOrderByRelationAggregateInput
 }
 
 export type LeaveRequestWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  evidenceFileId?: string
   AND?: Prisma.LeaveRequestWhereInput | Prisma.LeaveRequestWhereInput[]
   OR?: Prisma.LeaveRequestWhereInput[]
   NOT?: Prisma.LeaveRequestWhereInput | Prisma.LeaveRequestWhereInput[]
@@ -402,9 +390,8 @@ export type LeaveRequestWhereUniqueInput = Prisma.AtLeast<{
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeScalarRelationFilter, Prisma.EmployeeWhereInput>
   leaveType?: Prisma.XOR<Prisma.LeaveTypeScalarRelationFilter, Prisma.LeaveTypeWhereInput>
-  evidenceFile?: Prisma.XOR<Prisma.FileObjectNullableScalarRelationFilter, Prisma.FileObjectWhereInput> | null
   ledgerEntries?: Prisma.LeaveLedgerEntryListRelationFilter
-}, "id" | "evidenceFileId">
+}, "id">
 
 export type LeaveRequestOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -417,7 +404,6 @@ export type LeaveRequestOrderByWithAggregationInput = {
   endSession?: Prisma.SortOrder
   requestedUnits?: Prisma.SortOrder
   remarks?: Prisma.SortOrderInput | Prisma.SortOrder
-  evidenceFileId?: Prisma.SortOrderInput | Prisma.SortOrder
   status?: Prisma.SortOrder
   decisionComment?: Prisma.SortOrderInput | Prisma.SortOrder
   requestedById?: Prisma.SortOrder
@@ -448,7 +434,6 @@ export type LeaveRequestScalarWhereWithAggregatesInput = {
   endSession?: Prisma.EnumDaySessionWithAggregatesFilter<"LeaveRequest"> | $Enums.DaySession
   requestedUnits?: Prisma.DecimalWithAggregatesFilter<"LeaveRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.StringNullableWithAggregatesFilter<"LeaveRequest"> | string | null
-  evidenceFileId?: Prisma.UuidNullableWithAggregatesFilter<"LeaveRequest"> | string | null
   status?: Prisma.EnumLeaveRequestStatusWithAggregatesFilter<"LeaveRequest"> | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.StringNullableWithAggregatesFilter<"LeaveRequest"> | string | null
   requestedById?: Prisma.UuidWithAggregatesFilter<"LeaveRequest"> | string
@@ -480,7 +465,6 @@ export type LeaveRequestCreateInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutLeaveRequestsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutLeaveRequestsInput
   leaveType: Prisma.LeaveTypeCreateNestedOneWithoutRequestsInput
-  evidenceFile?: Prisma.FileObjectCreateNestedOneWithoutLeaveEvidenceInput
   ledgerEntries?: Prisma.LeaveLedgerEntryCreateNestedManyWithoutRequestInput
 }
 
@@ -495,7 +479,6 @@ export type LeaveRequestUncheckedCreateInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -528,7 +511,6 @@ export type LeaveRequestUpdateInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutLeaveRequestsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeaveRequestsNestedInput
   leaveType?: Prisma.LeaveTypeUpdateOneRequiredWithoutRequestsNestedInput
-  evidenceFile?: Prisma.FileObjectUpdateOneWithoutLeaveEvidenceNestedInput
   ledgerEntries?: Prisma.LeaveLedgerEntryUpdateManyWithoutRequestNestedInput
 }
 
@@ -543,7 +525,6 @@ export type LeaveRequestUncheckedUpdateInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -567,7 +548,6 @@ export type LeaveRequestCreateManyInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -609,7 +589,6 @@ export type LeaveRequestUncheckedUpdateManyInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -631,11 +610,6 @@ export type LeaveRequestOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type LeaveRequestNullableScalarRelationFilter = {
-  is?: Prisma.LeaveRequestWhereInput | null
-  isNot?: Prisma.LeaveRequestWhereInput | null
-}
-
 export type LeaveRequestCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   organizationId?: Prisma.SortOrder
@@ -647,7 +621,6 @@ export type LeaveRequestCountOrderByAggregateInput = {
   endSession?: Prisma.SortOrder
   requestedUnits?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
-  evidenceFileId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   decisionComment?: Prisma.SortOrder
   requestedById?: Prisma.SortOrder
@@ -675,7 +648,6 @@ export type LeaveRequestMaxOrderByAggregateInput = {
   endSession?: Prisma.SortOrder
   requestedUnits?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
-  evidenceFileId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   decisionComment?: Prisma.SortOrder
   requestedById?: Prisma.SortOrder
@@ -698,7 +670,6 @@ export type LeaveRequestMinOrderByAggregateInput = {
   endSession?: Prisma.SortOrder
   requestedUnits?: Prisma.SortOrder
   remarks?: Prisma.SortOrder
-  evidenceFileId?: Prisma.SortOrder
   status?: Prisma.SortOrder
   decisionComment?: Prisma.SortOrder
   requestedById?: Prisma.SortOrder
@@ -713,6 +684,11 @@ export type LeaveRequestMinOrderByAggregateInput = {
 export type LeaveRequestSumOrderByAggregateInput = {
   requestedUnits?: Prisma.SortOrder
   version?: Prisma.SortOrder
+}
+
+export type LeaveRequestNullableScalarRelationFilter = {
+  is?: Prisma.LeaveRequestWhereInput | null
+  isNot?: Prisma.LeaveRequestWhereInput | null
 }
 
 export type LeaveRequestCreateNestedManyWithoutOrganizationInput = {
@@ -797,38 +773,6 @@ export type LeaveRequestUncheckedUpdateManyWithoutEmployeeNestedInput = {
   update?: Prisma.LeaveRequestUpdateWithWhereUniqueWithoutEmployeeInput | Prisma.LeaveRequestUpdateWithWhereUniqueWithoutEmployeeInput[]
   updateMany?: Prisma.LeaveRequestUpdateManyWithWhereWithoutEmployeeInput | Prisma.LeaveRequestUpdateManyWithWhereWithoutEmployeeInput[]
   deleteMany?: Prisma.LeaveRequestScalarWhereInput | Prisma.LeaveRequestScalarWhereInput[]
-}
-
-export type LeaveRequestCreateNestedOneWithoutEvidenceFileInput = {
-  create?: Prisma.XOR<Prisma.LeaveRequestCreateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedCreateWithoutEvidenceFileInput>
-  connectOrCreate?: Prisma.LeaveRequestCreateOrConnectWithoutEvidenceFileInput
-  connect?: Prisma.LeaveRequestWhereUniqueInput
-}
-
-export type LeaveRequestUncheckedCreateNestedOneWithoutEvidenceFileInput = {
-  create?: Prisma.XOR<Prisma.LeaveRequestCreateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedCreateWithoutEvidenceFileInput>
-  connectOrCreate?: Prisma.LeaveRequestCreateOrConnectWithoutEvidenceFileInput
-  connect?: Prisma.LeaveRequestWhereUniqueInput
-}
-
-export type LeaveRequestUpdateOneWithoutEvidenceFileNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveRequestCreateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedCreateWithoutEvidenceFileInput>
-  connectOrCreate?: Prisma.LeaveRequestCreateOrConnectWithoutEvidenceFileInput
-  upsert?: Prisma.LeaveRequestUpsertWithoutEvidenceFileInput
-  disconnect?: Prisma.LeaveRequestWhereInput | boolean
-  delete?: Prisma.LeaveRequestWhereInput | boolean
-  connect?: Prisma.LeaveRequestWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaveRequestUpdateToOneWithWhereWithoutEvidenceFileInput, Prisma.LeaveRequestUpdateWithoutEvidenceFileInput>, Prisma.LeaveRequestUncheckedUpdateWithoutEvidenceFileInput>
-}
-
-export type LeaveRequestUncheckedUpdateOneWithoutEvidenceFileNestedInput = {
-  create?: Prisma.XOR<Prisma.LeaveRequestCreateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedCreateWithoutEvidenceFileInput>
-  connectOrCreate?: Prisma.LeaveRequestCreateOrConnectWithoutEvidenceFileInput
-  upsert?: Prisma.LeaveRequestUpsertWithoutEvidenceFileInput
-  disconnect?: Prisma.LeaveRequestWhereInput | boolean
-  delete?: Prisma.LeaveRequestWhereInput | boolean
-  connect?: Prisma.LeaveRequestWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.LeaveRequestUpdateToOneWithWhereWithoutEvidenceFileInput, Prisma.LeaveRequestUpdateWithoutEvidenceFileInput>, Prisma.LeaveRequestUncheckedUpdateWithoutEvidenceFileInput>
 }
 
 export type LeaveRequestCreateNestedManyWithoutLeaveTypeInput = {
@@ -916,7 +860,6 @@ export type LeaveRequestCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
   employee: Prisma.EmployeeCreateNestedOneWithoutLeaveRequestsInput
   leaveType: Prisma.LeaveTypeCreateNestedOneWithoutRequestsInput
-  evidenceFile?: Prisma.FileObjectCreateNestedOneWithoutLeaveEvidenceInput
   ledgerEntries?: Prisma.LeaveLedgerEntryCreateNestedManyWithoutRequestInput
 }
 
@@ -930,7 +873,6 @@ export type LeaveRequestUncheckedCreateWithoutOrganizationInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -983,7 +925,6 @@ export type LeaveRequestScalarWhereInput = {
   endSession?: Prisma.EnumDaySessionFilter<"LeaveRequest"> | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFilter<"LeaveRequest"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.StringNullableFilter<"LeaveRequest"> | string | null
-  evidenceFileId?: Prisma.UuidNullableFilter<"LeaveRequest"> | string | null
   status?: Prisma.EnumLeaveRequestStatusFilter<"LeaveRequest"> | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.StringNullableFilter<"LeaveRequest"> | string | null
   requestedById?: Prisma.UuidFilter<"LeaveRequest"> | string
@@ -1014,7 +955,6 @@ export type LeaveRequestCreateWithoutEmployeeInput = {
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutLeaveRequestsInput
   leaveType: Prisma.LeaveTypeCreateNestedOneWithoutRequestsInput
-  evidenceFile?: Prisma.FileObjectCreateNestedOneWithoutLeaveEvidenceInput
   ledgerEntries?: Prisma.LeaveLedgerEntryCreateNestedManyWithoutRequestInput
 }
 
@@ -1028,7 +968,6 @@ export type LeaveRequestUncheckedCreateWithoutEmployeeInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -1067,114 +1006,6 @@ export type LeaveRequestUpdateManyWithWhereWithoutEmployeeInput = {
   data: Prisma.XOR<Prisma.LeaveRequestUpdateManyMutationInput, Prisma.LeaveRequestUncheckedUpdateManyWithoutEmployeeInput>
 }
 
-export type LeaveRequestCreateWithoutEvidenceFileInput = {
-  id?: string
-  startDate: Date | string
-  endDate: Date | string
-  startSession?: $Enums.DaySession
-  endSession?: $Enums.DaySession
-  requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
-  remarks?: string | null
-  status?: $Enums.LeaveRequestStatus
-  decisionComment?: string | null
-  requestedById: string
-  decidedById?: string | null
-  decidedAt?: Date | string | null
-  cancelledAt?: Date | string | null
-  version?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutLeaveRequestsInput
-  employee: Prisma.EmployeeCreateNestedOneWithoutLeaveRequestsInput
-  leaveType: Prisma.LeaveTypeCreateNestedOneWithoutRequestsInput
-  ledgerEntries?: Prisma.LeaveLedgerEntryCreateNestedManyWithoutRequestInput
-}
-
-export type LeaveRequestUncheckedCreateWithoutEvidenceFileInput = {
-  id?: string
-  organizationId: string
-  employeeId: string
-  leaveTypeId: string
-  startDate: Date | string
-  endDate: Date | string
-  startSession?: $Enums.DaySession
-  endSession?: $Enums.DaySession
-  requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
-  remarks?: string | null
-  status?: $Enums.LeaveRequestStatus
-  decisionComment?: string | null
-  requestedById: string
-  decidedById?: string | null
-  decidedAt?: Date | string | null
-  cancelledAt?: Date | string | null
-  version?: number
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  ledgerEntries?: Prisma.LeaveLedgerEntryUncheckedCreateNestedManyWithoutRequestInput
-}
-
-export type LeaveRequestCreateOrConnectWithoutEvidenceFileInput = {
-  where: Prisma.LeaveRequestWhereUniqueInput
-  create: Prisma.XOR<Prisma.LeaveRequestCreateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedCreateWithoutEvidenceFileInput>
-}
-
-export type LeaveRequestUpsertWithoutEvidenceFileInput = {
-  update: Prisma.XOR<Prisma.LeaveRequestUpdateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedUpdateWithoutEvidenceFileInput>
-  create: Prisma.XOR<Prisma.LeaveRequestCreateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedCreateWithoutEvidenceFileInput>
-  where?: Prisma.LeaveRequestWhereInput
-}
-
-export type LeaveRequestUpdateToOneWithWhereWithoutEvidenceFileInput = {
-  where?: Prisma.LeaveRequestWhereInput
-  data: Prisma.XOR<Prisma.LeaveRequestUpdateWithoutEvidenceFileInput, Prisma.LeaveRequestUncheckedUpdateWithoutEvidenceFileInput>
-}
-
-export type LeaveRequestUpdateWithoutEvidenceFileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
-  endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
-  requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
-  decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestedById?: Prisma.StringFieldUpdateOperationsInput | string
-  decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutLeaveRequestsNestedInput
-  employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeaveRequestsNestedInput
-  leaveType?: Prisma.LeaveTypeUpdateOneRequiredWithoutRequestsNestedInput
-  ledgerEntries?: Prisma.LeaveLedgerEntryUpdateManyWithoutRequestNestedInput
-}
-
-export type LeaveRequestUncheckedUpdateWithoutEvidenceFileInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  employeeId?: Prisma.StringFieldUpdateOperationsInput | string
-  leaveTypeId?: Prisma.StringFieldUpdateOperationsInput | string
-  startDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  endDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  startSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
-  endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
-  requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
-  decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  requestedById?: Prisma.StringFieldUpdateOperationsInput | string
-  decidedById?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  decidedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  cancelledAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  version?: Prisma.IntFieldUpdateOperationsInput | number
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  ledgerEntries?: Prisma.LeaveLedgerEntryUncheckedUpdateManyWithoutRequestNestedInput
-}
-
 export type LeaveRequestCreateWithoutLeaveTypeInput = {
   id?: string
   startDate: Date | string
@@ -1194,7 +1025,6 @@ export type LeaveRequestCreateWithoutLeaveTypeInput = {
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutLeaveRequestsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutLeaveRequestsInput
-  evidenceFile?: Prisma.FileObjectCreateNestedOneWithoutLeaveEvidenceInput
   ledgerEntries?: Prisma.LeaveLedgerEntryCreateNestedManyWithoutRequestInput
 }
 
@@ -1208,7 +1038,6 @@ export type LeaveRequestUncheckedCreateWithoutLeaveTypeInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -1267,7 +1096,6 @@ export type LeaveRequestCreateWithoutLedgerEntriesInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutLeaveRequestsInput
   employee: Prisma.EmployeeCreateNestedOneWithoutLeaveRequestsInput
   leaveType: Prisma.LeaveTypeCreateNestedOneWithoutRequestsInput
-  evidenceFile?: Prisma.FileObjectCreateNestedOneWithoutLeaveEvidenceInput
 }
 
 export type LeaveRequestUncheckedCreateWithoutLedgerEntriesInput = {
@@ -1281,7 +1109,6 @@ export type LeaveRequestUncheckedCreateWithoutLedgerEntriesInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -1329,7 +1156,6 @@ export type LeaveRequestUpdateWithoutLedgerEntriesInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutLeaveRequestsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeaveRequestsNestedInput
   leaveType?: Prisma.LeaveTypeUpdateOneRequiredWithoutRequestsNestedInput
-  evidenceFile?: Prisma.FileObjectUpdateOneWithoutLeaveEvidenceNestedInput
 }
 
 export type LeaveRequestUncheckedUpdateWithoutLedgerEntriesInput = {
@@ -1343,7 +1169,6 @@ export type LeaveRequestUncheckedUpdateWithoutLedgerEntriesInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1365,7 +1190,6 @@ export type LeaveRequestCreateManyOrganizationInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -1396,7 +1220,6 @@ export type LeaveRequestUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeaveRequestsNestedInput
   leaveType?: Prisma.LeaveTypeUpdateOneRequiredWithoutRequestsNestedInput
-  evidenceFile?: Prisma.FileObjectUpdateOneWithoutLeaveEvidenceNestedInput
   ledgerEntries?: Prisma.LeaveLedgerEntryUpdateManyWithoutRequestNestedInput
 }
 
@@ -1410,7 +1233,6 @@ export type LeaveRequestUncheckedUpdateWithoutOrganizationInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1433,7 +1255,6 @@ export type LeaveRequestUncheckedUpdateManyWithoutOrganizationInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1455,7 +1276,6 @@ export type LeaveRequestCreateManyEmployeeInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -1486,7 +1306,6 @@ export type LeaveRequestUpdateWithoutEmployeeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutLeaveRequestsNestedInput
   leaveType?: Prisma.LeaveTypeUpdateOneRequiredWithoutRequestsNestedInput
-  evidenceFile?: Prisma.FileObjectUpdateOneWithoutLeaveEvidenceNestedInput
   ledgerEntries?: Prisma.LeaveLedgerEntryUpdateManyWithoutRequestNestedInput
 }
 
@@ -1500,7 +1319,6 @@ export type LeaveRequestUncheckedUpdateWithoutEmployeeInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1523,7 +1341,6 @@ export type LeaveRequestUncheckedUpdateManyWithoutEmployeeInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1545,7 +1362,6 @@ export type LeaveRequestCreateManyLeaveTypeInput = {
   endSession?: $Enums.DaySession
   requestedUnits: runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: string | null
-  evidenceFileId?: string | null
   status?: $Enums.LeaveRequestStatus
   decisionComment?: string | null
   requestedById: string
@@ -1576,7 +1392,6 @@ export type LeaveRequestUpdateWithoutLeaveTypeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutLeaveRequestsNestedInput
   employee?: Prisma.EmployeeUpdateOneRequiredWithoutLeaveRequestsNestedInput
-  evidenceFile?: Prisma.FileObjectUpdateOneWithoutLeaveEvidenceNestedInput
   ledgerEntries?: Prisma.LeaveLedgerEntryUpdateManyWithoutRequestNestedInput
 }
 
@@ -1590,7 +1405,6 @@ export type LeaveRequestUncheckedUpdateWithoutLeaveTypeInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1613,7 +1427,6 @@ export type LeaveRequestUncheckedUpdateManyWithoutLeaveTypeInput = {
   endSession?: Prisma.EnumDaySessionFieldUpdateOperationsInput | $Enums.DaySession
   requestedUnits?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   remarks?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  evidenceFileId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   status?: Prisma.EnumLeaveRequestStatusFieldUpdateOperationsInput | $Enums.LeaveRequestStatus
   decisionComment?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   requestedById?: Prisma.StringFieldUpdateOperationsInput | string
@@ -1667,7 +1480,6 @@ export type LeaveRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   endSession?: boolean
   requestedUnits?: boolean
   remarks?: boolean
-  evidenceFileId?: boolean
   status?: boolean
   decisionComment?: boolean
   requestedById?: boolean
@@ -1680,7 +1492,6 @@ export type LeaveRequestSelect<ExtArgs extends runtime.Types.Extensions.Internal
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   leaveType?: boolean | Prisma.LeaveTypeDefaultArgs<ExtArgs>
-  evidenceFile?: boolean | Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>
   ledgerEntries?: boolean | Prisma.LeaveRequest$ledgerEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.LeaveRequestCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["leaveRequest"]>
@@ -1696,7 +1507,6 @@ export type LeaveRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   endSession?: boolean
   requestedUnits?: boolean
   remarks?: boolean
-  evidenceFileId?: boolean
   status?: boolean
   decisionComment?: boolean
   requestedById?: boolean
@@ -1709,7 +1519,6 @@ export type LeaveRequestSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   leaveType?: boolean | Prisma.LeaveTypeDefaultArgs<ExtArgs>
-  evidenceFile?: boolean | Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>
 }, ExtArgs["result"]["leaveRequest"]>
 
 export type LeaveRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1723,7 +1532,6 @@ export type LeaveRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   endSession?: boolean
   requestedUnits?: boolean
   remarks?: boolean
-  evidenceFileId?: boolean
   status?: boolean
   decisionComment?: boolean
   requestedById?: boolean
@@ -1736,7 +1544,6 @@ export type LeaveRequestSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   leaveType?: boolean | Prisma.LeaveTypeDefaultArgs<ExtArgs>
-  evidenceFile?: boolean | Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>
 }, ExtArgs["result"]["leaveRequest"]>
 
 export type LeaveRequestSelectScalar = {
@@ -1750,7 +1557,6 @@ export type LeaveRequestSelectScalar = {
   endSession?: boolean
   requestedUnits?: boolean
   remarks?: boolean
-  evidenceFileId?: boolean
   status?: boolean
   decisionComment?: boolean
   requestedById?: boolean
@@ -1762,12 +1568,11 @@ export type LeaveRequestSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LeaveRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "leaveTypeId" | "startDate" | "endDate" | "startSession" | "endSession" | "requestedUnits" | "remarks" | "evidenceFileId" | "status" | "decisionComment" | "requestedById" | "decidedById" | "decidedAt" | "cancelledAt" | "version" | "createdAt" | "updatedAt", ExtArgs["result"]["leaveRequest"]>
+export type LeaveRequestOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "employeeId" | "leaveTypeId" | "startDate" | "endDate" | "startSession" | "endSession" | "requestedUnits" | "remarks" | "status" | "decisionComment" | "requestedById" | "decidedById" | "decidedAt" | "cancelledAt" | "version" | "createdAt" | "updatedAt", ExtArgs["result"]["leaveRequest"]>
 export type LeaveRequestInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   leaveType?: boolean | Prisma.LeaveTypeDefaultArgs<ExtArgs>
-  evidenceFile?: boolean | Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>
   ledgerEntries?: boolean | Prisma.LeaveRequest$ledgerEntriesArgs<ExtArgs>
   _count?: boolean | Prisma.LeaveRequestCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1775,13 +1580,11 @@ export type LeaveRequestIncludeCreateManyAndReturn<ExtArgs extends runtime.Types
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   leaveType?: boolean | Prisma.LeaveTypeDefaultArgs<ExtArgs>
-  evidenceFile?: boolean | Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>
 }
 export type LeaveRequestIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.EmployeeDefaultArgs<ExtArgs>
   leaveType?: boolean | Prisma.LeaveTypeDefaultArgs<ExtArgs>
-  evidenceFile?: boolean | Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>
 }
 
 export type $LeaveRequestPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1790,7 +1593,6 @@ export type $LeaveRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     organization: Prisma.$OrganizationPayload<ExtArgs>
     employee: Prisma.$EmployeePayload<ExtArgs>
     leaveType: Prisma.$LeaveTypePayload<ExtArgs>
-    evidenceFile: Prisma.$FileObjectPayload<ExtArgs> | null
     ledgerEntries: Prisma.$LeaveLedgerEntryPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1804,7 +1606,6 @@ export type $LeaveRequestPayload<ExtArgs extends runtime.Types.Extensions.Intern
     endSession: $Enums.DaySession
     requestedUnits: runtime.Decimal
     remarks: string | null
-    evidenceFileId: string | null
     status: $Enums.LeaveRequestStatus
     decisionComment: string | null
     requestedById: string
@@ -2211,7 +2012,6 @@ export interface Prisma__LeaveRequestClient<T, Null = never, ExtArgs extends run
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   employee<T extends Prisma.EmployeeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.EmployeeDefaultArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   leaveType<T extends Prisma.LeaveTypeDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeaveTypeDefaultArgs<ExtArgs>>): Prisma.Prisma__LeaveTypeClient<runtime.Types.Result.GetResult<Prisma.$LeaveTypePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
-  evidenceFile<T extends Prisma.LeaveRequest$evidenceFileArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeaveRequest$evidenceFileArgs<ExtArgs>>): Prisma.Prisma__FileObjectClient<runtime.Types.Result.GetResult<Prisma.$FileObjectPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   ledgerEntries<T extends Prisma.LeaveRequest$ledgerEntriesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.LeaveRequest$ledgerEntriesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$LeaveLedgerEntryPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -2252,7 +2052,6 @@ export interface LeaveRequestFieldRefs {
   readonly endSession: Prisma.FieldRef<"LeaveRequest", 'DaySession'>
   readonly requestedUnits: Prisma.FieldRef<"LeaveRequest", 'Decimal'>
   readonly remarks: Prisma.FieldRef<"LeaveRequest", 'String'>
-  readonly evidenceFileId: Prisma.FieldRef<"LeaveRequest", 'String'>
   readonly status: Prisma.FieldRef<"LeaveRequest", 'LeaveRequestStatus'>
   readonly decisionComment: Prisma.FieldRef<"LeaveRequest", 'String'>
   readonly requestedById: Prisma.FieldRef<"LeaveRequest", 'String'>
@@ -2660,25 +2459,6 @@ export type LeaveRequestDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many LeaveRequests to delete.
    */
   limit?: number
-}
-
-/**
- * LeaveRequest.evidenceFile
- */
-export type LeaveRequest$evidenceFileArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the FileObject
-   */
-  select?: Prisma.FileObjectSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the FileObject
-   */
-  omit?: Prisma.FileObjectOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.FileObjectInclude<ExtArgs> | null
-  where?: Prisma.FileObjectWhereInput
 }
 
 /**

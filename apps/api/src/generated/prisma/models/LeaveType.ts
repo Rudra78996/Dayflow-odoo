@@ -27,12 +27,10 @@ export type AggregateLeaveType = {
 }
 
 export type LeaveTypeAvgAggregateOutputType = {
-  attachmentAfterUnits: runtime.Decimal | null
   version: number | null
 }
 
 export type LeaveTypeSumAggregateOutputType = {
-  attachmentAfterUnits: runtime.Decimal | null
   version: number | null
 }
 
@@ -43,7 +41,6 @@ export type LeaveTypeMinAggregateOutputType = {
   name: string | null
   paid: boolean | null
   color: string | null
-  attachmentAfterUnits: runtime.Decimal | null
   halfDaySupported: boolean | null
   approvalRequired: boolean | null
   allowNegative: boolean | null
@@ -60,7 +57,6 @@ export type LeaveTypeMaxAggregateOutputType = {
   name: string | null
   paid: boolean | null
   color: string | null
-  attachmentAfterUnits: runtime.Decimal | null
   halfDaySupported: boolean | null
   approvalRequired: boolean | null
   allowNegative: boolean | null
@@ -77,7 +73,6 @@ export type LeaveTypeCountAggregateOutputType = {
   name: number
   paid: number
   color: number
-  attachmentAfterUnits: number
   halfDaySupported: number
   approvalRequired: number
   allowNegative: number
@@ -90,12 +85,10 @@ export type LeaveTypeCountAggregateOutputType = {
 
 
 export type LeaveTypeAvgAggregateInputType = {
-  attachmentAfterUnits?: true
   version?: true
 }
 
 export type LeaveTypeSumAggregateInputType = {
-  attachmentAfterUnits?: true
   version?: true
 }
 
@@ -106,7 +99,6 @@ export type LeaveTypeMinAggregateInputType = {
   name?: true
   paid?: true
   color?: true
-  attachmentAfterUnits?: true
   halfDaySupported?: true
   approvalRequired?: true
   allowNegative?: true
@@ -123,7 +115,6 @@ export type LeaveTypeMaxAggregateInputType = {
   name?: true
   paid?: true
   color?: true
-  attachmentAfterUnits?: true
   halfDaySupported?: true
   approvalRequired?: true
   allowNegative?: true
@@ -140,7 +131,6 @@ export type LeaveTypeCountAggregateInputType = {
   name?: true
   paid?: true
   color?: true
-  attachmentAfterUnits?: true
   halfDaySupported?: true
   approvalRequired?: true
   allowNegative?: true
@@ -244,7 +234,6 @@ export type LeaveTypeGroupByOutputType = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits: runtime.Decimal | null
   halfDaySupported: boolean
   approvalRequired: boolean
   allowNegative: boolean
@@ -284,7 +273,6 @@ export type LeaveTypeWhereInput = {
   name?: Prisma.StringFilter<"LeaveType"> | string
   paid?: Prisma.BoolFilter<"LeaveType"> | boolean
   color?: Prisma.StringFilter<"LeaveType"> | string
-  attachmentAfterUnits?: Prisma.DecimalNullableFilter<"LeaveType"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFilter<"LeaveType"> | boolean
   approvalRequired?: Prisma.BoolFilter<"LeaveType"> | boolean
   allowNegative?: Prisma.BoolFilter<"LeaveType"> | boolean
@@ -305,7 +293,6 @@ export type LeaveTypeOrderByWithRelationInput = {
   name?: Prisma.SortOrder
   paid?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  attachmentAfterUnits?: Prisma.SortOrderInput | Prisma.SortOrder
   halfDaySupported?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
   allowNegative?: Prisma.SortOrder
@@ -330,7 +317,6 @@ export type LeaveTypeWhereUniqueInput = Prisma.AtLeast<{
   name?: Prisma.StringFilter<"LeaveType"> | string
   paid?: Prisma.BoolFilter<"LeaveType"> | boolean
   color?: Prisma.StringFilter<"LeaveType"> | string
-  attachmentAfterUnits?: Prisma.DecimalNullableFilter<"LeaveType"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFilter<"LeaveType"> | boolean
   approvalRequired?: Prisma.BoolFilter<"LeaveType"> | boolean
   allowNegative?: Prisma.BoolFilter<"LeaveType"> | boolean
@@ -351,7 +337,6 @@ export type LeaveTypeOrderByWithAggregationInput = {
   name?: Prisma.SortOrder
   paid?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  attachmentAfterUnits?: Prisma.SortOrderInput | Prisma.SortOrder
   halfDaySupported?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
   allowNegative?: Prisma.SortOrder
@@ -376,7 +361,6 @@ export type LeaveTypeScalarWhereWithAggregatesInput = {
   name?: Prisma.StringWithAggregatesFilter<"LeaveType"> | string
   paid?: Prisma.BoolWithAggregatesFilter<"LeaveType"> | boolean
   color?: Prisma.StringWithAggregatesFilter<"LeaveType"> | string
-  attachmentAfterUnits?: Prisma.DecimalNullableWithAggregatesFilter<"LeaveType"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolWithAggregatesFilter<"LeaveType"> | boolean
   approvalRequired?: Prisma.BoolWithAggregatesFilter<"LeaveType"> | boolean
   allowNegative?: Prisma.BoolWithAggregatesFilter<"LeaveType"> | boolean
@@ -392,7 +376,6 @@ export type LeaveTypeCreateInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -413,7 +396,6 @@ export type LeaveTypeUncheckedCreateInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -432,7 +414,6 @@ export type LeaveTypeUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -453,7 +434,6 @@ export type LeaveTypeUncheckedUpdateInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -473,7 +453,6 @@ export type LeaveTypeCreateManyInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -489,7 +468,6 @@ export type LeaveTypeUpdateManyMutationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -506,7 +484,6 @@ export type LeaveTypeUncheckedUpdateManyInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -538,7 +515,6 @@ export type LeaveTypeCountOrderByAggregateInput = {
   name?: Prisma.SortOrder
   paid?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  attachmentAfterUnits?: Prisma.SortOrder
   halfDaySupported?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
   allowNegative?: Prisma.SortOrder
@@ -549,7 +525,6 @@ export type LeaveTypeCountOrderByAggregateInput = {
 }
 
 export type LeaveTypeAvgOrderByAggregateInput = {
-  attachmentAfterUnits?: Prisma.SortOrder
   version?: Prisma.SortOrder
 }
 
@@ -560,7 +535,6 @@ export type LeaveTypeMaxOrderByAggregateInput = {
   name?: Prisma.SortOrder
   paid?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  attachmentAfterUnits?: Prisma.SortOrder
   halfDaySupported?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
   allowNegative?: Prisma.SortOrder
@@ -577,7 +551,6 @@ export type LeaveTypeMinOrderByAggregateInput = {
   name?: Prisma.SortOrder
   paid?: Prisma.SortOrder
   color?: Prisma.SortOrder
-  attachmentAfterUnits?: Prisma.SortOrder
   halfDaySupported?: Prisma.SortOrder
   approvalRequired?: Prisma.SortOrder
   allowNegative?: Prisma.SortOrder
@@ -588,7 +561,6 @@ export type LeaveTypeMinOrderByAggregateInput = {
 }
 
 export type LeaveTypeSumOrderByAggregateInput = {
-  attachmentAfterUnits?: Prisma.SortOrder
   version?: Prisma.SortOrder
 }
 
@@ -639,14 +611,6 @@ export type LeaveTypeUncheckedUpdateManyWithoutOrganizationNestedInput = {
   deleteMany?: Prisma.LeaveTypeScalarWhereInput | Prisma.LeaveTypeScalarWhereInput[]
 }
 
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
 export type LeaveTypeCreateNestedOneWithoutPoliciesInput = {
   create?: Prisma.XOR<Prisma.LeaveTypeCreateWithoutPoliciesInput, Prisma.LeaveTypeUncheckedCreateWithoutPoliciesInput>
   connectOrCreate?: Prisma.LeaveTypeCreateOrConnectWithoutPoliciesInput
@@ -695,7 +659,6 @@ export type LeaveTypeCreateWithoutOrganizationInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -714,7 +677,6 @@ export type LeaveTypeUncheckedCreateWithoutOrganizationInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -763,7 +725,6 @@ export type LeaveTypeScalarWhereInput = {
   name?: Prisma.StringFilter<"LeaveType"> | string
   paid?: Prisma.BoolFilter<"LeaveType"> | boolean
   color?: Prisma.StringFilter<"LeaveType"> | string
-  attachmentAfterUnits?: Prisma.DecimalNullableFilter<"LeaveType"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFilter<"LeaveType"> | boolean
   approvalRequired?: Prisma.BoolFilter<"LeaveType"> | boolean
   allowNegative?: Prisma.BoolFilter<"LeaveType"> | boolean
@@ -779,7 +740,6 @@ export type LeaveTypeCreateWithoutPoliciesInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -799,7 +759,6 @@ export type LeaveTypeUncheckedCreateWithoutPoliciesInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -833,7 +792,6 @@ export type LeaveTypeUpdateWithoutPoliciesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -853,7 +811,6 @@ export type LeaveTypeUncheckedUpdateWithoutPoliciesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -871,7 +828,6 @@ export type LeaveTypeCreateWithoutRequestsInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -891,7 +847,6 @@ export type LeaveTypeUncheckedCreateWithoutRequestsInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -925,7 +880,6 @@ export type LeaveTypeUpdateWithoutRequestsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -945,7 +899,6 @@ export type LeaveTypeUncheckedUpdateWithoutRequestsInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -963,7 +916,6 @@ export type LeaveTypeCreateWithoutLedgerEntriesInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -983,7 +935,6 @@ export type LeaveTypeUncheckedCreateWithoutLedgerEntriesInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -1017,7 +968,6 @@ export type LeaveTypeUpdateWithoutLedgerEntriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1037,7 +987,6 @@ export type LeaveTypeUncheckedUpdateWithoutLedgerEntriesInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1055,7 +1004,6 @@ export type LeaveTypeCreateManyOrganizationInput = {
   name: string
   paid: boolean
   color: string
-  attachmentAfterUnits?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -1071,7 +1019,6 @@ export type LeaveTypeUpdateWithoutOrganizationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1090,7 +1037,6 @@ export type LeaveTypeUncheckedUpdateWithoutOrganizationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1109,7 +1055,6 @@ export type LeaveTypeUncheckedUpdateManyWithoutOrganizationInput = {
   name?: Prisma.StringFieldUpdateOperationsInput | string
   paid?: Prisma.BoolFieldUpdateOperationsInput | boolean
   color?: Prisma.StringFieldUpdateOperationsInput | string
-  attachmentAfterUnits?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
   halfDaySupported?: Prisma.BoolFieldUpdateOperationsInput | boolean
   approvalRequired?: Prisma.BoolFieldUpdateOperationsInput | boolean
   allowNegative?: Prisma.BoolFieldUpdateOperationsInput | boolean
@@ -1175,7 +1120,6 @@ export type LeaveTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   name?: boolean
   paid?: boolean
   color?: boolean
-  attachmentAfterUnits?: boolean
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -1197,7 +1141,6 @@ export type LeaveTypeSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   name?: boolean
   paid?: boolean
   color?: boolean
-  attachmentAfterUnits?: boolean
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -1215,7 +1158,6 @@ export type LeaveTypeSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   name?: boolean
   paid?: boolean
   color?: boolean
-  attachmentAfterUnits?: boolean
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -1233,7 +1175,6 @@ export type LeaveTypeSelectScalar = {
   name?: boolean
   paid?: boolean
   color?: boolean
-  attachmentAfterUnits?: boolean
   halfDaySupported?: boolean
   approvalRequired?: boolean
   allowNegative?: boolean
@@ -1243,7 +1184,7 @@ export type LeaveTypeSelectScalar = {
   updatedAt?: boolean
 }
 
-export type LeaveTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "code" | "name" | "paid" | "color" | "attachmentAfterUnits" | "halfDaySupported" | "approvalRequired" | "allowNegative" | "active" | "version" | "createdAt" | "updatedAt", ExtArgs["result"]["leaveType"]>
+export type LeaveTypeOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "organizationId" | "code" | "name" | "paid" | "color" | "halfDaySupported" | "approvalRequired" | "allowNegative" | "active" | "version" | "createdAt" | "updatedAt", ExtArgs["result"]["leaveType"]>
 export type LeaveTypeInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   policies?: boolean | Prisma.LeaveType$policiesArgs<ExtArgs>
@@ -1273,7 +1214,6 @@ export type $LeaveTypePayload<ExtArgs extends runtime.Types.Extensions.InternalA
     name: string
     paid: boolean
     color: string
-    attachmentAfterUnits: runtime.Decimal | null
     halfDaySupported: boolean
     approvalRequired: boolean
     allowNegative: boolean
@@ -1714,7 +1654,6 @@ export interface LeaveTypeFieldRefs {
   readonly name: Prisma.FieldRef<"LeaveType", 'String'>
   readonly paid: Prisma.FieldRef<"LeaveType", 'Boolean'>
   readonly color: Prisma.FieldRef<"LeaveType", 'String'>
-  readonly attachmentAfterUnits: Prisma.FieldRef<"LeaveType", 'Decimal'>
   readonly halfDaySupported: Prisma.FieldRef<"LeaveType", 'Boolean'>
   readonly approvalRequired: Prisma.FieldRef<"LeaveType", 'Boolean'>
   readonly allowNegative: Prisma.FieldRef<"LeaveType", 'Boolean'>

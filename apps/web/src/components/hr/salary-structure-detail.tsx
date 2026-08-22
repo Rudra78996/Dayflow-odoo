@@ -1,20 +1,82 @@
 "use client";
 
 import { useState, type FormEvent } from "react";
-import { BadgeIndianRupeeIcon, CalculatorIcon, Link2Icon, PlusIcon, UserPlusIcon } from "lucide-react";
+import {
+  BadgeIndianRupeeIcon,
+  CalculatorIcon,
+  Link2Icon,
+  PlusIcon,
+  UserPlusIcon,
+} from "lucide-react";
 import { toast } from "sonner";
-import { collectionItems, formatDate, getCollection, patchJson, postJson, type SalaryStructure } from "@/lib/hr-api";
+import type { EmployeeListItem } from "@/lib/api";
+import {
+  collectionItems,
+  formatDate,
+  getCollection,
+  patchJson,
+  postJson,
+  type SalaryStructure,
+} from "@/lib/hr-api";
 import { useApiResource } from "@/hooks/use-api-resource";
-import { DataEmpty, DataError, DataLoading, PageHeading, StatusBadge } from "@/components/hr/hr-primitives";
+import {
+  DataEmpty,
+  DataError,
+  DataLoading,
+  PageHeading,
+  StatusBadge,
+} from "@/components/hr/hr-primitives";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Field, FieldDescription, FieldError, FieldGroup, FieldLabel } from "@/components/ui/field";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import {
+  Combobox,
+  ComboboxContent,
+  ComboboxEmpty,
+  ComboboxInput,
+  ComboboxItem,
+  ComboboxList,
+} from "@/components/ui/combobox";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import {
+  Field,
+  FieldDescription,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Spinner } from "@/components/ui/spinner";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 const componentTypeItems = [
   { label: "Earning", value: "EARNING" },
@@ -32,22 +94,577 @@ const salaryBasisItems = [
   { label: "Another component", value: "COMPONENT" },
 ];
 
-function AddComponentDialog({ structure, onCreated }: { structure: SalaryStructure; onCreated: () => void }) {
-  const [open, setOpen] = useState(false); const [pending, setPending] = useState(false); const [error, setError] = useState("");
-  async function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setPending(true); setError(""); const values = Object.fromEntries(new FormData(event.currentTarget)); const component = { code: String(values.code), name: String(values.name), componentType: String(values.componentType), calculationMode: String(values.calculationMode), basis: values.basis || undefined, basisComponentCode: values.basisComponentCode || undefined, value: Number(values.value), displayOrder: (structure.components?.length ?? 0) * 10 + 10, taxable: values.taxable === "on" }; const existing = (structure.components || []).map(({ code, name, componentType, calculationMode, basis, basisComponentCode, value, displayOrder, taxable }) => ({ code, name, componentType, calculationMode, basis, basisComponentCode: basisComponentCode || undefined, value, displayOrder, taxable: Boolean(taxable) })); try { await patchJson(`/salary-structures/${structure.id}`, { version: structure.version, code: structure.code, name: structure.name, currency: structure.currency, effectiveFrom: values.effectiveFrom, components: [...existing, component] }); toast.success("New salary version created", { description: "The prior version remains immutable for historical payroll." }); setOpen(false); onCreated(); } catch (cause) { setError(cause instanceof Error ? cause.message : "Could not create the new salary version."); } finally { setPending(false); } }
-  return <Dialog open={open} onOpenChange={setOpen}><DialogTrigger render={<Button />}><PlusIcon />Add component</DialogTrigger><DialogContent><DialogHeader><DialogTitle>Create a new component version</DialogTitle><DialogDescription>Use a fixed amount, safe percentage basis, or one balancing component. Circular dependencies are rejected by the API.</DialogDescription></DialogHeader><form className="flex flex-col gap-5" onSubmit={submit}><FieldGroup><div className="grid gap-4 sm:grid-cols-2"><Field><FieldLabel htmlFor="component-code">Stable code</FieldLabel><Input id="component-code" name="code" placeholder="HRA" required /></Field><Field><FieldLabel htmlFor="component-name">Display name</FieldLabel><Input id="component-name" name="name" placeholder="House Rent Allowance" required /></Field></div><Field><FieldLabel>Component type</FieldLabel><Select items={componentTypeItems} name="componentType" defaultValue="EARNING"><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectGroup>{componentTypeItems.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectGroup></SelectContent></Select></Field><Field><FieldLabel>Calculation</FieldLabel><Select items={calculationModeItems} name="calculationMode" defaultValue="PERCENTAGE"><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectGroup>{calculationModeItems.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectGroup></SelectContent></Select></Field><div className="grid gap-4 sm:grid-cols-2"><Field><FieldLabel htmlFor="value">Value</FieldLabel><Input id="value" name="value" type="number" min="0" step="0.01" required /></Field><Field><FieldLabel>Basis</FieldLabel><Select items={salaryBasisItems} name="basis" defaultValue="WAGE"><SelectTrigger className="w-full"><SelectValue /></SelectTrigger><SelectContent><SelectGroup>{salaryBasisItems.map((item) => <SelectItem key={item.value} value={item.value}>{item.label}</SelectItem>)}</SelectGroup></SelectContent></Select></Field></div><Field><FieldLabel htmlFor="basisComponentCode">Basis component code</FieldLabel><Input id="basisComponentCode" name="basisComponentCode" placeholder="BASIC" /><FieldDescription>No arbitrary JavaScript or free-form formula is accepted.</FieldDescription></Field><Field data-invalid={Boolean(error)}><FieldLabel htmlFor="component-effective">New version effective from</FieldLabel><Input id="component-effective" name="effectiveFrom" type="date" required /><FieldError>{error}</FieldError></Field></FieldGroup><DialogFooter><Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button><Button type="submit" disabled={pending}>{pending ? <><Spinner />Creating</> : "Create version"}</Button></DialogFooter></form></DialogContent></Dialog>;
+function AddComponentDialog({
+  structure,
+  onCreated,
+}: {
+  structure: SalaryStructure;
+  onCreated: () => void;
+}) {
+  const [open, setOpen] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setPending(true);
+    setError("");
+    const values = Object.fromEntries(new FormData(event.currentTarget));
+    const component = {
+      code: String(values.code),
+      name: String(values.name),
+      componentType: String(values.componentType),
+      calculationMode: String(values.calculationMode),
+      basis: values.basis || undefined,
+      basisComponentCode: values.basisComponentCode || undefined,
+      value: Number(values.value),
+      displayOrder: (structure.components?.length ?? 0) * 10 + 10,
+      taxable: values.taxable === "on",
+    };
+    const existing = (structure.components || []).map(
+      ({
+        code,
+        name,
+        componentType,
+        calculationMode,
+        basis,
+        basisComponentCode,
+        value,
+        displayOrder,
+        taxable,
+      }) => ({
+        code,
+        name,
+        componentType,
+        calculationMode,
+        basis,
+        basisComponentCode: basisComponentCode || undefined,
+        value,
+        displayOrder,
+        taxable: Boolean(taxable),
+      }),
+    );
+    try {
+      await patchJson(`/salary-structures/${structure.id}`, {
+        version: structure.version,
+        code: structure.code,
+        name: structure.name,
+        currency: structure.currency,
+        effectiveFrom: values.effectiveFrom,
+        components: [...existing, component],
+      });
+      toast.success("New salary version created", {
+        description:
+          "The prior version remains immutable for historical payroll.",
+      });
+      setOpen(false);
+      onCreated();
+    } catch (cause) {
+      setError(
+        cause instanceof Error
+          ? cause.message
+          : "Could not create the new salary version.",
+      );
+    } finally {
+      setPending(false);
+    }
+  }
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger render={<Button />}>
+        <PlusIcon />
+        Add component
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Create a new component version</DialogTitle>
+          <DialogDescription>
+            Use a fixed amount, safe percentage basis, or one balancing
+            component. Circular dependencies are rejected by the API.
+          </DialogDescription>
+        </DialogHeader>
+        <form className="flex flex-col gap-5" onSubmit={submit}>
+          <FieldGroup>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field>
+                <FieldLabel htmlFor="component-code">Stable code</FieldLabel>
+                <Input
+                  id="component-code"
+                  name="code"
+                  placeholder="HRA"
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="component-name">Display name</FieldLabel>
+                <Input
+                  id="component-name"
+                  name="name"
+                  placeholder="House Rent Allowance"
+                  required
+                />
+              </Field>
+            </div>
+            <Field>
+              <FieldLabel>Component type</FieldLabel>
+              <Select
+                items={componentTypeItems}
+                name="componentType"
+                defaultValue="EARNING"
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {componentTypeItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </Field>
+            <Field>
+              <FieldLabel>Calculation</FieldLabel>
+              <Select
+                items={calculationModeItems}
+                name="calculationMode"
+                defaultValue="PERCENTAGE"
+              >
+                <SelectTrigger className="w-full">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectGroup>
+                    {calculationModeItems.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        {item.label}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field>
+                <FieldLabel htmlFor="value">Value</FieldLabel>
+                <Input
+                  id="value"
+                  name="value"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel>Basis</FieldLabel>
+                <Select
+                  items={salaryBasisItems}
+                  name="basis"
+                  defaultValue="WAGE"
+                >
+                  <SelectTrigger className="w-full">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      {salaryBasisItems.map((item) => (
+                        <SelectItem key={item.value} value={item.value}>
+                          {item.label}
+                        </SelectItem>
+                      ))}
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </Field>
+            </div>
+            <Field>
+              <FieldLabel htmlFor="basisComponentCode">
+                Basis component code
+              </FieldLabel>
+              <Input
+                id="basisComponentCode"
+                name="basisComponentCode"
+                placeholder="BASIC"
+              />
+              <FieldDescription>
+                No arbitrary JavaScript or free-form formula is accepted.
+              </FieldDescription>
+            </Field>
+            <Field data-invalid={Boolean(error)}>
+              <FieldLabel htmlFor="component-effective">
+                New version effective from
+              </FieldLabel>
+              <Input
+                id="component-effective"
+                name="effectiveFrom"
+                type="date"
+                required
+              />
+              <FieldError>{error}</FieldError>
+            </Field>
+          </FieldGroup>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={pending}>
+              {pending ? (
+                <>
+                  <Spinner />
+                  Creating
+                </>
+              ) : (
+                "Create version"
+              )}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
 function AssignSalaryDialog({ structureId }: { structureId: string }) {
-  const [open, setOpen] = useState(false); const [pending, setPending] = useState(false); const [error, setError] = useState("");
-  async function submit(event: FormEvent<HTMLFormElement>) { event.preventDefault(); setPending(true); setError(""); const values = Object.fromEntries(new FormData(event.currentTarget)); try { await postJson("/salary-assignments", { ...values, structureId, monthlyWage: Number(values.monthlyWage), workingDaysPerWeek: Number(values.workingDaysPerWeek), breakMinutes: Number(values.breakMinutes || 0) }); toast.success("Salary assignment created"); setOpen(false); } catch (cause) { setError(cause instanceof Error ? cause.message : "Could not assign salary."); } finally { setPending(false); } }
-  return <Dialog open={open} onOpenChange={setOpen}><DialogTrigger render={<Button variant="outline" />}><UserPlusIcon />Assign employee</DialogTrigger><DialogContent><DialogHeader><DialogTitle>Assign salary structure</DialogTitle><DialogDescription>Create an effective-dated salary version for one employee. Existing history remains unchanged.</DialogDescription></DialogHeader><form className="flex flex-col gap-5" onSubmit={submit}><FieldGroup><Field><FieldLabel htmlFor="employeeId">Employee ID</FieldLabel><Input id="employeeId" name="employeeId" required /></Field><div className="grid gap-4 sm:grid-cols-2"><Field><FieldLabel htmlFor="monthlyWage">Monthly wage</FieldLabel><Input id="monthlyWage" name="monthlyWage" type="number" min="0" step="0.01" required /></Field><Field><FieldLabel htmlFor="workingDaysPerWeek">Days per week</FieldLabel><Input id="workingDaysPerWeek" name="workingDaysPerWeek" type="number" min="1" max="7" defaultValue="5" required /></Field></div><div className="grid gap-4 sm:grid-cols-2"><Field><FieldLabel htmlFor="currency">Currency</FieldLabel><Input id="currency" name="currency" defaultValue="INR" required /></Field><Field><FieldLabel htmlFor="breakMinutes">Break minutes</FieldLabel><Input id="breakMinutes" name="breakMinutes" type="number" min="0" defaultValue="0" required /></Field></div><Field data-invalid={Boolean(error)}><FieldLabel htmlFor="effectiveFrom">Effective from</FieldLabel><Input id="effectiveFrom" name="effectiveFrom" type="date" required /><FieldError>{error}</FieldError></Field></FieldGroup><DialogFooter><Button type="button" variant="outline" onClick={() => setOpen(false)}>Cancel</Button><Button type="submit" disabled={pending}>{pending ? <><Spinner />Assigning</> : "Create assignment"}</Button></DialogFooter></form></DialogContent></Dialog>;
+  const [open, setOpen] = useState(false);
+  const [pending, setPending] = useState(false);
+  const [error, setError] = useState("");
+  const [selectedEmployee, setSelectedEmployee] =
+    useState<EmployeeListItem | null>(null);
+  const employeesResource = useApiResource(
+    () => getCollection<EmployeeListItem>("/employees?limit=100&page=1"),
+    [],
+  );
+  const employees = collectionItems(employeesResource.data);
+  const employeeName = (employee: EmployeeListItem) =>
+    employee.preferredName ||
+    `${employee.firstName} ${employee.lastName}`.trim();
+  const employeeSearchText = (employee: EmployeeListItem) =>
+    [
+      employeeName(employee),
+      employee.firstName,
+      employee.lastName,
+      employee.loginId,
+      employee.employeeCode,
+      employee.workEmail,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLocaleLowerCase();
+
+  async function submit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    if (!selectedEmployee) {
+      setError("Select an employee before creating the assignment.");
+      return;
+    }
+    setPending(true);
+    setError("");
+    const values = Object.fromEntries(new FormData(event.currentTarget));
+    try {
+      await postJson("/salary-assignments", {
+        ...values,
+        employeeId: selectedEmployee.id,
+        structureId,
+        monthlyWage: Number(values.monthlyWage),
+        workingDaysPerWeek: Number(values.workingDaysPerWeek),
+        breakMinutes: Number(values.breakMinutes || 0),
+      });
+      toast.success("Salary assignment created");
+      setSelectedEmployee(null);
+      setOpen(false);
+    } catch (cause) {
+      setError(
+        cause instanceof Error ? cause.message : "Could not assign salary.",
+      );
+    } finally {
+      setPending(false);
+    }
+  }
+
+  return (
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger render={<Button variant="outline" />}>
+        <UserPlusIcon />
+        Assign employee
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Assign salary structure</DialogTitle>
+          <DialogDescription>
+            Create an effective-dated salary version for one employee. Existing
+            history remains unchanged.
+          </DialogDescription>
+        </DialogHeader>
+        <form className="flex flex-col gap-5" onSubmit={submit}>
+          <FieldGroup>
+            <Field data-invalid={Boolean(employeesResource.error)}>
+              <FieldLabel htmlFor="salary-employee">Employee</FieldLabel>
+              <Combobox
+                items={employees}
+                value={selectedEmployee}
+                onValueChange={(employee) => {
+                  setSelectedEmployee(employee);
+                  setError("");
+                }}
+                itemToStringLabel={employeeName}
+                itemToStringValue={(employee) => employee.id}
+                filter={(employee, query) =>
+                  employeeSearchText(employee).includes(
+                    query.trim().toLocaleLowerCase(),
+                  )
+                }
+                autoHighlight
+                disabled={employeesResource.loading}
+              >
+                <ComboboxInput
+                  id="salary-employee"
+                  placeholder={
+                    employeesResource.loading
+                      ? "Loading employees…"
+                      : "Search name, login ID, or email"
+                  }
+                  aria-invalid={Boolean(employeesResource.error)}
+                />
+                <ComboboxContent>
+                  <ComboboxEmpty>No matching employees found.</ComboboxEmpty>
+                  <ComboboxList>
+                    {(employee) => (
+                      <ComboboxItem key={employee.id} value={employee}>
+                        <span className="flex min-w-0 flex-col">
+                          <span className="truncate font-medium">
+                            {employeeName(employee)}
+                          </span>
+                          <span className="truncate text-xs text-muted-foreground">
+                            {employee.loginId}
+                            {employee.workEmail
+                              ? ` · ${employee.workEmail}`
+                              : ""}
+                          </span>
+                        </span>
+                      </ComboboxItem>
+                    )}
+                  </ComboboxList>
+                </ComboboxContent>
+              </Combobox>
+              <FieldDescription>
+                Search by employee name, login ID, employee code, or work email.
+              </FieldDescription>
+              <FieldError>{employeesResource.error?.message}</FieldError>
+            </Field>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field>
+                <FieldLabel htmlFor="monthlyWage">Monthly wage</FieldLabel>
+                <Input
+                  id="monthlyWage"
+                  name="monthlyWage"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="workingDaysPerWeek">
+                  Days per week
+                </FieldLabel>
+                <Input
+                  id="workingDaysPerWeek"
+                  name="workingDaysPerWeek"
+                  type="number"
+                  min="1"
+                  max="7"
+                  defaultValue="5"
+                  required
+                />
+              </Field>
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <Field>
+                <FieldLabel htmlFor="currency">Currency</FieldLabel>
+                <Input
+                  id="currency"
+                  name="currency"
+                  defaultValue="INR"
+                  required
+                />
+              </Field>
+              <Field>
+                <FieldLabel htmlFor="breakMinutes">Break minutes</FieldLabel>
+                <Input
+                  id="breakMinutes"
+                  name="breakMinutes"
+                  type="number"
+                  min="0"
+                  defaultValue="0"
+                  required
+                />
+              </Field>
+            </div>
+            <Field data-invalid={Boolean(error)}>
+              <FieldLabel htmlFor="effectiveFrom">Effective from</FieldLabel>
+              <Input
+                id="effectiveFrom"
+                name="effectiveFrom"
+                type="date"
+                required
+              />
+              <FieldError>{error}</FieldError>
+            </Field>
+          </FieldGroup>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setOpen(false)}
+            >
+              Cancel
+            </Button>
+            <Button type="submit" disabled={pending || !selectedEmployee}>
+              {pending ? (
+                <>
+                  <Spinner />
+                  Assigning
+                </>
+              ) : (
+                "Create assignment"
+              )}
+            </Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
 }
 
-export function SalaryStructureDetail({ structureId }: { structureId: string }) {
-  const resource = useApiResource(async () => { const result = await getCollection<SalaryStructure>("/salary-structures"); const structure = collectionItems(result).find((item) => item.id === structureId); if (!structure) throw new Error("Salary structure not found."); return structure; }, [structureId]);
-  if (resource.loading) return <main className="p-4 sm:p-6 lg:p-8"><DataLoading rows={8} /></main>;
-  if (resource.error || !resource.data) return <main className="p-4 sm:p-6 lg:p-8"><DataError error={resource.error || new Error("Salary structure not found.")} retry={resource.refresh} /></main>;
-  const structure = resource.data; const components = structure.components || [];
-  return <main className="flex flex-1 flex-col gap-7 p-4 sm:p-6 lg:p-8"><PageHeading eyebrow="Salary structure" title={structure.name} description={`Version ${structure.version ?? 1} · effective ${formatDate(structure.effectiveFrom)} · ${structure.currency || "INR"}`} actions={<><AssignSalaryDialog structureId={structure.id} /><AddComponentDialog structure={structure} onCreated={resource.refresh} /></>} /><Alert><CalculatorIcon /><AlertTitle>Deterministic calculation only</AlertTitle><AlertDescription>Components use decimal arithmetic, explicit bases, and controlled rounding. Circular or negative balancing calculations must be rejected before payroll.</AlertDescription></Alert><Card><CardHeader className="border-b"><CardTitle>Calculation components</CardTitle><CardDescription>Ordered earnings, deductions, employer contributions, and the optional balancing component.</CardDescription></CardHeader><CardContent>{components.length === 0 ? <DataEmpty icon={BadgeIndianRupeeIcon} title="No components in this version" description="Add Basic, HRA, allowances, PF, Professional Tax, or another approved component." action={<AddComponentDialog structure={structure} onCreated={resource.refresh} />} /> : <Table><TableHeader><TableRow><TableHead>Code</TableHead><TableHead>Name</TableHead><TableHead>Type</TableHead><TableHead>Calculation</TableHead><TableHead>Value</TableHead></TableRow></TableHeader><TableBody>{components.map((component) => <TableRow key={component.id || component.code}><TableCell className="font-mono text-xs">{component.code}</TableCell><TableCell className="font-medium">{component.name}</TableCell><TableCell><StatusBadge status={component.componentType} /></TableCell><TableCell><span className="inline-flex items-center gap-1.5"><Link2Icon className="size-3.5 text-muted-foreground" />{component.calculationMode.replaceAll("_", " ")}</span></TableCell><TableCell className="tabular">{component.calculationMode === "PERCENTAGE" ? `${component.value}%` : component.calculationMode === "FIXED" ? new Intl.NumberFormat("en-IN", { style: "currency", currency: structure.currency || "INR" }).format(component.value) : "Calculated"}</TableCell></TableRow>)}</TableBody></Table>}</CardContent></Card></main>;
+export function SalaryStructureDetail({
+  structureId,
+}: {
+  structureId: string;
+}) {
+  const resource = useApiResource(async () => {
+    const result = await getCollection<SalaryStructure>("/salary-structures");
+    const structure = collectionItems(result).find(
+      (item) => item.id === structureId,
+    );
+    if (!structure) throw new Error("Salary structure not found.");
+    return structure;
+  }, [structureId]);
+  if (resource.loading)
+    return (
+      <main className="p-4 sm:p-6 lg:p-8">
+        <DataLoading rows={8} />
+      </main>
+    );
+  if (resource.error || !resource.data)
+    return (
+      <main className="p-4 sm:p-6 lg:p-8">
+        <DataError
+          error={resource.error || new Error("Salary structure not found.")}
+          retry={resource.refresh}
+        />
+      </main>
+    );
+  const structure = resource.data;
+  const components = structure.components || [];
+  return (
+    <main className="flex flex-1 flex-col gap-7 p-4 sm:p-6 lg:p-8">
+      <PageHeading
+        eyebrow="Salary structure"
+        title={structure.name}
+        description={`Version ${structure.version ?? 1} · effective ${formatDate(structure.effectiveFrom)} · ${structure.currency || "INR"}`}
+        actions={
+          <>
+            <AssignSalaryDialog structureId={structure.id} />
+            <AddComponentDialog
+              structure={structure}
+              onCreated={resource.refresh}
+            />
+          </>
+        }
+      />
+      <Alert>
+        <CalculatorIcon />
+        <AlertTitle>Deterministic calculation only</AlertTitle>
+        <AlertDescription>
+          Components use decimal arithmetic, explicit bases, and controlled
+          rounding. Circular or negative balancing calculations must be rejected
+          before payroll.
+        </AlertDescription>
+      </Alert>
+      <Card>
+        <CardHeader className="border-b">
+          <CardTitle>Calculation components</CardTitle>
+          <CardDescription>
+            Ordered earnings, deductions, employer contributions, and the
+            optional balancing component.
+          </CardDescription>
+        </CardHeader>
+        <CardContent>
+          {components.length === 0 ? (
+            <DataEmpty
+              icon={BadgeIndianRupeeIcon}
+              title="No components in this version"
+              description="Add Basic, HRA, allowances, PF, Professional Tax, or another approved component."
+              action={
+                <AddComponentDialog
+                  structure={structure}
+                  onCreated={resource.refresh}
+                />
+              }
+            />
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Code</TableHead>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Type</TableHead>
+                  <TableHead>Calculation</TableHead>
+                  <TableHead>Value</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {components.map((component) => (
+                  <TableRow key={component.id || component.code}>
+                    <TableCell className="font-mono text-xs">
+                      {component.code}
+                    </TableCell>
+                    <TableCell className="font-medium">
+                      {component.name}
+                    </TableCell>
+                    <TableCell>
+                      <StatusBadge status={component.componentType} />
+                    </TableCell>
+                    <TableCell>
+                      <span className="inline-flex items-center gap-1.5">
+                        <Link2Icon className="size-3.5 text-muted-foreground" />
+                        {component.calculationMode.replaceAll("_", " ")}
+                      </span>
+                    </TableCell>
+                    <TableCell className="tabular">
+                      {component.calculationMode === "PERCENTAGE"
+                        ? `${component.value}%`
+                        : component.calculationMode === "FIXED"
+                          ? new Intl.NumberFormat("en-IN", {
+                              style: "currency",
+                              currency: structure.currency || "INR",
+                            }).format(component.value)
+                          : "Calculated"}
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
+        </CardContent>
+      </Card>
+    </main>
+  );
 }

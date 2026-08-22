@@ -10,7 +10,6 @@ import { utcDate } from '../calendar/calendar.service';
 import {
   AttendanceStatus,
   DaySession,
-  FileScanStatus,
   LeaveLedgerEntryType,
   LeaveRequestStatus,
   Prisma,
@@ -70,7 +69,6 @@ export class LeaveService {
           name: dto.name.trim(),
           paid: dto.paid,
           color: dto.color,
-          attachmentAfterUnits: dto.attachmentAfterUnits,
           halfDaySupported: dto.halfDaySupported,
           approvalRequired: dto.approvalRequired,
           allowNegative: dto.allowNegative,
@@ -102,7 +100,6 @@ export class LeaveService {
           paid: dto.paid,
           active: dto.active,
           allowNegative: dto.allowNegative,
-          attachmentAfterUnits: dto.attachmentAfterUnits,
           version: { increment: 1 },
         },
       });
@@ -612,30 +609,6 @@ export class LeaveService {
             code: 'LEAVE_NO_COUNTED_DAYS',
             message: 'The selected range has no countable leave days.',
           });
-        if (
-          type.attachmentAfterUnits &&
-          units >= Number(type.attachmentAfterUnits)
-        ) {
-          if (!dto.evidenceFileId)
-            throw new BadRequestException({
-              code: 'LEAVE_EVIDENCE_REQUIRED',
-              message: 'Evidence is required for this leave duration.',
-            });
-          const file = await tx.fileObject.findFirst({
-            where: {
-              id: dto.evidenceFileId,
-              organizationId: user.organizationId,
-              employeeId,
-              scanStatus: FileScanStatus.CLEAN,
-            },
-          });
-          if (!file)
-            throw new BadRequestException({
-              code: 'LEAVE_EVIDENCE_INVALID',
-              message:
-                'Evidence must be an approved file owned by this employee.',
-            });
-        }
         const balance = await tx.leaveLedgerEntry.aggregate({
           where: {
             organizationId: user.organizationId,
@@ -662,7 +635,6 @@ export class LeaveService {
             endSession: dto.endSession,
             requestedUnits: units,
             remarks: dto.remarks?.trim(),
-            evidenceFileId: dto.evidenceFileId,
             requestedById: user.userId,
           },
         });

@@ -35,7 +35,6 @@ export type LeaveType = {
   code?: string;
   paid?: boolean;
   balance?: number;
-  attachmentAfterUnits?: number | string | null;
   active?: boolean;
 };
 

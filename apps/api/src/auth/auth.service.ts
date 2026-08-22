@@ -270,7 +270,6 @@ export class AuthService {
           paid: true,
           color: '#7C5AA6',
           annualEntitlement: 7,
-          attachmentAfterUnits: 2,
         },
         {
           code: 'UNPAID',
@@ -289,7 +288,6 @@ export class AuthService {
             name: leave.name,
             paid: leave.paid,
             color: leave.color,
-            attachmentAfterUnits: leave.attachmentAfterUnits,
             allowNegative: leave.allowNegative ?? false,
           },
         });

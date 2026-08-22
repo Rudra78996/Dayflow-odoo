@@ -299,7 +299,6 @@ export type FileObjectWhereInput = {
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   certification?: Prisma.XOR<Prisma.CertificationNullableScalarRelationFilter, Prisma.CertificationWhereInput> | null
-  leaveEvidence?: Prisma.XOR<Prisma.LeaveRequestNullableScalarRelationFilter, Prisma.LeaveRequestWhereInput> | null
 }
 
 export type FileObjectOrderByWithRelationInput = {
@@ -321,7 +320,6 @@ export type FileObjectOrderByWithRelationInput = {
   organization?: Prisma.OrganizationOrderByWithRelationInput
   employee?: Prisma.EmployeeOrderByWithRelationInput
   certification?: Prisma.CertificationOrderByWithRelationInput
-  leaveEvidence?: Prisma.LeaveRequestOrderByWithRelationInput
 }
 
 export type FileObjectWhereUniqueInput = Prisma.AtLeast<{
@@ -346,7 +344,6 @@ export type FileObjectWhereUniqueInput = Prisma.AtLeast<{
   organization?: Prisma.XOR<Prisma.OrganizationScalarRelationFilter, Prisma.OrganizationWhereInput>
   employee?: Prisma.XOR<Prisma.EmployeeNullableScalarRelationFilter, Prisma.EmployeeWhereInput> | null
   certification?: Prisma.XOR<Prisma.CertificationNullableScalarRelationFilter, Prisma.CertificationWhereInput> | null
-  leaveEvidence?: Prisma.XOR<Prisma.LeaveRequestNullableScalarRelationFilter, Prisma.LeaveRequestWhereInput> | null
 }, "id" | "objectKey">
 
 export type FileObjectOrderByWithAggregationInput = {
@@ -410,7 +407,6 @@ export type FileObjectCreateInput = {
   organization: Prisma.OrganizationCreateNestedOneWithoutFilesInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutFilesInput
   certification?: Prisma.CertificationCreateNestedOneWithoutFileInput
-  leaveEvidence?: Prisma.LeaveRequestCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectUncheckedCreateInput = {
@@ -430,7 +426,6 @@ export type FileObjectUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   certification?: Prisma.CertificationUncheckedCreateNestedOneWithoutFileInput
-  leaveEvidence?: Prisma.LeaveRequestUncheckedCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectUpdateInput = {
@@ -450,7 +445,6 @@ export type FileObjectUpdateInput = {
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutFilesNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutFilesNestedInput
   certification?: Prisma.CertificationUpdateOneWithoutFileNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectUncheckedUpdateInput = {
@@ -470,7 +464,6 @@ export type FileObjectUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certification?: Prisma.CertificationUncheckedUpdateOneWithoutFileNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUncheckedUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectCreateManyInput = {
@@ -718,22 +711,6 @@ export type EnumFileScanStatusFieldUpdateOperationsInput = {
   set?: $Enums.FileScanStatus
 }
 
-export type FileObjectCreateNestedOneWithoutLeaveEvidenceInput = {
-  create?: Prisma.XOR<Prisma.FileObjectCreateWithoutLeaveEvidenceInput, Prisma.FileObjectUncheckedCreateWithoutLeaveEvidenceInput>
-  connectOrCreate?: Prisma.FileObjectCreateOrConnectWithoutLeaveEvidenceInput
-  connect?: Prisma.FileObjectWhereUniqueInput
-}
-
-export type FileObjectUpdateOneWithoutLeaveEvidenceNestedInput = {
-  create?: Prisma.XOR<Prisma.FileObjectCreateWithoutLeaveEvidenceInput, Prisma.FileObjectUncheckedCreateWithoutLeaveEvidenceInput>
-  connectOrCreate?: Prisma.FileObjectCreateOrConnectWithoutLeaveEvidenceInput
-  upsert?: Prisma.FileObjectUpsertWithoutLeaveEvidenceInput
-  disconnect?: Prisma.FileObjectWhereInput | boolean
-  delete?: Prisma.FileObjectWhereInput | boolean
-  connect?: Prisma.FileObjectWhereUniqueInput
-  update?: Prisma.XOR<Prisma.XOR<Prisma.FileObjectUpdateToOneWithWhereWithoutLeaveEvidenceInput, Prisma.FileObjectUpdateWithoutLeaveEvidenceInput>, Prisma.FileObjectUncheckedUpdateWithoutLeaveEvidenceInput>
-}
-
 export type FileObjectCreateWithoutOrganizationInput = {
   id?: string
   bucket: string
@@ -750,7 +727,6 @@ export type FileObjectCreateWithoutOrganizationInput = {
   updatedAt?: Date | string
   employee?: Prisma.EmployeeCreateNestedOneWithoutFilesInput
   certification?: Prisma.CertificationCreateNestedOneWithoutFileInput
-  leaveEvidence?: Prisma.LeaveRequestCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectUncheckedCreateWithoutOrganizationInput = {
@@ -769,7 +745,6 @@ export type FileObjectUncheckedCreateWithoutOrganizationInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   certification?: Prisma.CertificationUncheckedCreateNestedOneWithoutFileInput
-  leaveEvidence?: Prisma.LeaveRequestUncheckedCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectCreateOrConnectWithoutOrganizationInput = {
@@ -835,7 +810,6 @@ export type FileObjectCreateWithoutEmployeeInput = {
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutFilesInput
   certification?: Prisma.CertificationCreateNestedOneWithoutFileInput
-  leaveEvidence?: Prisma.LeaveRequestCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectUncheckedCreateWithoutEmployeeInput = {
@@ -854,7 +828,6 @@ export type FileObjectUncheckedCreateWithoutEmployeeInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   certification?: Prisma.CertificationUncheckedCreateNestedOneWithoutFileInput
-  leaveEvidence?: Prisma.LeaveRequestUncheckedCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectCreateOrConnectWithoutEmployeeInput = {
@@ -899,7 +872,6 @@ export type FileObjectCreateWithoutCertificationInput = {
   updatedAt?: Date | string
   organization: Prisma.OrganizationCreateNestedOneWithoutFilesInput
   employee?: Prisma.EmployeeCreateNestedOneWithoutFilesInput
-  leaveEvidence?: Prisma.LeaveRequestCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectUncheckedCreateWithoutCertificationInput = {
@@ -918,7 +890,6 @@ export type FileObjectUncheckedCreateWithoutCertificationInput = {
   createdById: string
   createdAt?: Date | string
   updatedAt?: Date | string
-  leaveEvidence?: Prisma.LeaveRequestUncheckedCreateNestedOneWithoutEvidenceFileInput
 }
 
 export type FileObjectCreateOrConnectWithoutCertificationInput = {
@@ -953,7 +924,6 @@ export type FileObjectUpdateWithoutCertificationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutFilesNestedInput
   employee?: Prisma.EmployeeUpdateOneWithoutFilesNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectUncheckedUpdateWithoutCertificationInput = {
@@ -972,99 +942,6 @@ export type FileObjectUncheckedUpdateWithoutCertificationInput = {
   createdById?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  leaveEvidence?: Prisma.LeaveRequestUncheckedUpdateOneWithoutEvidenceFileNestedInput
-}
-
-export type FileObjectCreateWithoutLeaveEvidenceInput = {
-  id?: string
-  bucket: string
-  objectKey: string
-  originalName: string
-  mimeType: string
-  sizeBytes: bigint | number
-  checksumSha256: string
-  classification: $Enums.FileClassification
-  scanStatus?: $Enums.FileScanStatus
-  uploadedAt?: Date | string | null
-  createdById: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  organization: Prisma.OrganizationCreateNestedOneWithoutFilesInput
-  employee?: Prisma.EmployeeCreateNestedOneWithoutFilesInput
-  certification?: Prisma.CertificationCreateNestedOneWithoutFileInput
-}
-
-export type FileObjectUncheckedCreateWithoutLeaveEvidenceInput = {
-  id?: string
-  organizationId: string
-  employeeId?: string | null
-  bucket: string
-  objectKey: string
-  originalName: string
-  mimeType: string
-  sizeBytes: bigint | number
-  checksumSha256: string
-  classification: $Enums.FileClassification
-  scanStatus?: $Enums.FileScanStatus
-  uploadedAt?: Date | string | null
-  createdById: string
-  createdAt?: Date | string
-  updatedAt?: Date | string
-  certification?: Prisma.CertificationUncheckedCreateNestedOneWithoutFileInput
-}
-
-export type FileObjectCreateOrConnectWithoutLeaveEvidenceInput = {
-  where: Prisma.FileObjectWhereUniqueInput
-  create: Prisma.XOR<Prisma.FileObjectCreateWithoutLeaveEvidenceInput, Prisma.FileObjectUncheckedCreateWithoutLeaveEvidenceInput>
-}
-
-export type FileObjectUpsertWithoutLeaveEvidenceInput = {
-  update: Prisma.XOR<Prisma.FileObjectUpdateWithoutLeaveEvidenceInput, Prisma.FileObjectUncheckedUpdateWithoutLeaveEvidenceInput>
-  create: Prisma.XOR<Prisma.FileObjectCreateWithoutLeaveEvidenceInput, Prisma.FileObjectUncheckedCreateWithoutLeaveEvidenceInput>
-  where?: Prisma.FileObjectWhereInput
-}
-
-export type FileObjectUpdateToOneWithWhereWithoutLeaveEvidenceInput = {
-  where?: Prisma.FileObjectWhereInput
-  data: Prisma.XOR<Prisma.FileObjectUpdateWithoutLeaveEvidenceInput, Prisma.FileObjectUncheckedUpdateWithoutLeaveEvidenceInput>
-}
-
-export type FileObjectUpdateWithoutLeaveEvidenceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  bucket?: Prisma.StringFieldUpdateOperationsInput | string
-  objectKey?: Prisma.StringFieldUpdateOperationsInput | string
-  originalName?: Prisma.StringFieldUpdateOperationsInput | string
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  checksumSha256?: Prisma.StringFieldUpdateOperationsInput | string
-  classification?: Prisma.EnumFileClassificationFieldUpdateOperationsInput | $Enums.FileClassification
-  scanStatus?: Prisma.EnumFileScanStatusFieldUpdateOperationsInput | $Enums.FileScanStatus
-  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  organization?: Prisma.OrganizationUpdateOneRequiredWithoutFilesNestedInput
-  employee?: Prisma.EmployeeUpdateOneWithoutFilesNestedInput
-  certification?: Prisma.CertificationUpdateOneWithoutFileNestedInput
-}
-
-export type FileObjectUncheckedUpdateWithoutLeaveEvidenceInput = {
-  id?: Prisma.StringFieldUpdateOperationsInput | string
-  organizationId?: Prisma.StringFieldUpdateOperationsInput | string
-  employeeId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  bucket?: Prisma.StringFieldUpdateOperationsInput | string
-  objectKey?: Prisma.StringFieldUpdateOperationsInput | string
-  originalName?: Prisma.StringFieldUpdateOperationsInput | string
-  mimeType?: Prisma.StringFieldUpdateOperationsInput | string
-  sizeBytes?: Prisma.BigIntFieldUpdateOperationsInput | bigint | number
-  checksumSha256?: Prisma.StringFieldUpdateOperationsInput | string
-  classification?: Prisma.EnumFileClassificationFieldUpdateOperationsInput | $Enums.FileClassification
-  scanStatus?: Prisma.EnumFileScanStatusFieldUpdateOperationsInput | $Enums.FileScanStatus
-  uploadedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-  createdById?: Prisma.StringFieldUpdateOperationsInput | string
-  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  certification?: Prisma.CertificationUncheckedUpdateOneWithoutFileNestedInput
 }
 
 export type FileObjectCreateManyOrganizationInput = {
@@ -1100,7 +977,6 @@ export type FileObjectUpdateWithoutOrganizationInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   employee?: Prisma.EmployeeUpdateOneWithoutFilesNestedInput
   certification?: Prisma.CertificationUpdateOneWithoutFileNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectUncheckedUpdateWithoutOrganizationInput = {
@@ -1119,7 +995,6 @@ export type FileObjectUncheckedUpdateWithoutOrganizationInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certification?: Prisma.CertificationUncheckedUpdateOneWithoutFileNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUncheckedUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectUncheckedUpdateManyWithoutOrganizationInput = {
@@ -1172,7 +1047,6 @@ export type FileObjectUpdateWithoutEmployeeInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   organization?: Prisma.OrganizationUpdateOneRequiredWithoutFilesNestedInput
   certification?: Prisma.CertificationUpdateOneWithoutFileNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectUncheckedUpdateWithoutEmployeeInput = {
@@ -1191,7 +1065,6 @@ export type FileObjectUncheckedUpdateWithoutEmployeeInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   certification?: Prisma.CertificationUncheckedUpdateOneWithoutFileNestedInput
-  leaveEvidence?: Prisma.LeaveRequestUncheckedUpdateOneWithoutEvidenceFileNestedInput
 }
 
 export type FileObjectUncheckedUpdateManyWithoutEmployeeInput = {
@@ -1232,7 +1105,6 @@ export type FileObjectSelect<ExtArgs extends runtime.Types.Extensions.InternalAr
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.FileObject$employeeArgs<ExtArgs>
   certification?: boolean | Prisma.FileObject$certificationArgs<ExtArgs>
-  leaveEvidence?: boolean | Prisma.FileObject$leaveEvidenceArgs<ExtArgs>
 }, ExtArgs["result"]["fileObject"]>
 
 export type FileObjectSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -1298,7 +1170,6 @@ export type FileObjectInclude<ExtArgs extends runtime.Types.Extensions.InternalA
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
   employee?: boolean | Prisma.FileObject$employeeArgs<ExtArgs>
   certification?: boolean | Prisma.FileObject$certificationArgs<ExtArgs>
-  leaveEvidence?: boolean | Prisma.FileObject$leaveEvidenceArgs<ExtArgs>
 }
 export type FileObjectIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   organization?: boolean | Prisma.OrganizationDefaultArgs<ExtArgs>
@@ -1315,7 +1186,6 @@ export type $FileObjectPayload<ExtArgs extends runtime.Types.Extensions.Internal
     organization: Prisma.$OrganizationPayload<ExtArgs>
     employee: Prisma.$EmployeePayload<ExtArgs> | null
     certification: Prisma.$CertificationPayload<ExtArgs> | null
-    leaveEvidence: Prisma.$LeaveRequestPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1730,7 +1600,6 @@ export interface Prisma__FileObjectClient<T, Null = never, ExtArgs extends runti
   organization<T extends Prisma.OrganizationDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.OrganizationDefaultArgs<ExtArgs>>): Prisma.Prisma__OrganizationClient<runtime.Types.Result.GetResult<Prisma.$OrganizationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   employee<T extends Prisma.FileObject$employeeArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileObject$employeeArgs<ExtArgs>>): Prisma.Prisma__EmployeeClient<runtime.Types.Result.GetResult<Prisma.$EmployeePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   certification<T extends Prisma.FileObject$certificationArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileObject$certificationArgs<ExtArgs>>): Prisma.Prisma__CertificationClient<runtime.Types.Result.GetResult<Prisma.$CertificationPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-  leaveEvidence<T extends Prisma.FileObject$leaveEvidenceArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FileObject$leaveEvidenceArgs<ExtArgs>>): Prisma.Prisma__LeaveRequestClient<runtime.Types.Result.GetResult<Prisma.$LeaveRequestPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2211,25 +2080,6 @@ export type FileObject$certificationArgs<ExtArgs extends runtime.Types.Extension
    */
   include?: Prisma.CertificationInclude<ExtArgs> | null
   where?: Prisma.CertificationWhereInput
-}
-
-/**
- * FileObject.leaveEvidence
- */
-export type FileObject$leaveEvidenceArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  /**
-   * Select specific fields to fetch from the LeaveRequest
-   */
-  select?: Prisma.LeaveRequestSelect<ExtArgs> | null
-  /**
-   * Omit specific fields from the LeaveRequest
-   */
-  omit?: Prisma.LeaveRequestOmit<ExtArgs> | null
-  /**
-   * Choose, which related nodes to fetch as well
-   */
-  include?: Prisma.LeaveRequestInclude<ExtArgs> | null
-  where?: Prisma.LeaveRequestWhereInput
 }
 
 /**

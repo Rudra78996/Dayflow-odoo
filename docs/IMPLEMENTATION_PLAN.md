@@ -39,7 +39,7 @@ This architecture keeps the first release understandable and testable while leav
 | resources/image copy 5.png | Attendance defaults, work time and breaks, payroll dependency, payable-day deductions | Defines attendance-to-payroll behavior |
 | resources/image copy 4.png | Admin daily attendance list, employee search, date navigation, work and extra hours | Defines admin attendance UI |
 | resources/image copy 3.png | Employee monthly attendance, counts, date navigation, check-in/out, work and extra hours | Defines employee attendance UI |
-| resources/image copy 2.png | Leave request modal, leave types, date range, allocation, attachment, submit/discard | Defines leave request capture |
+| resources/image copy 2.png | Leave request modal, leave types, date range, allocation, submit/discard | Defines leave request capture; evidence attachments are intentionally excluded |
 | resources/image copy.png | Employee leave balances, annual calendar, holidays, status legend | Defines the employee time-off calendar |
 | resources/image.png | Admin time-off list, search, approval/rejection actions, Allocation tab | Defines leave approval and allocation administration |
 | Linked Excalidraw preview | Confirms the screenshots are sections of one product flow board | Used as a completeness cross-check |
@@ -288,7 +288,6 @@ Authorization tests must verify both endpoint access and field redaction. Hiding
 - Store metadata in PostgreSQL and bytes in object storage.
 - Validate size, extension, MIME signature, and organization ownership.
 - Use short-lived signed upload/download URLs.
-- Leave evidence and profile documents have different permissions.
 - Malware scanning is required before a file becomes downloadable in production.
 
 ### 5.4 Work calendars and attendance
@@ -352,7 +351,6 @@ Authorization tests must verify both endpoint access and field redaction. Hiding
 
 - Seed Paid Time Off, Sick Leave, and Unpaid Leave.
 - Configurable paid/unpaid, attachment rule, color/icon, half-day support, approval requirement, negative-balance rule, and active status.
-- Sick leave can require a medical certificate based on duration/policy, not merely on UI presence.
 
 #### LEAVE-002 — Policies and allocations
 
@@ -989,7 +987,6 @@ Cross-employee and cross-organization denial tests are mandatory, not optional e
 5. Duplicate clock-in/out submissions are idempotent and do not create duplicate events.
 6. Employee submits Paid Time Off; Admin approves; balance and calendar update; attendance shows Leave.
 7. Two Admins attempt to approve leave against the same remaining balance; only a valid transaction succeeds.
-8. Sick leave policy requires evidence; invalid/missing file is rejected.
 9. Unpaid leave and absence reduce payroll payable units.
 10. Salary formula example produces exact decimal results, detects circular formulas, and never exceeds configured wage rules.
 11. Payroll with unresolved incomplete attendance cannot finalize.
@@ -1581,7 +1578,7 @@ These are not reasons to stop planning, but Stage 0 cannot pass without answers:
 7. Exact Login ID prefix and name-abbreviation algorithm.
 8. Attendance grace, half-day/full-day, break, overtime, overnight, missing-record, and correction rules.
 9. Whether attendance approval applies to every day or only corrections/exceptions.
-10. Leave accrual/carry-forward/proration/negative balance/cancellation rules and sick-certificate threshold.
+10. Leave accrual/carry-forward/proration/negative balance/cancellation rules.
 11. Applicable holiday calendars by company/location.
 12. Salary formulas, percentage bases, rounding, PF applicability/caps, Professional Tax jurisdiction, and other statutory deductions.
 13. Payroll frequency, cut-off, pay date, joiner/leaver proration, and finalization/reopen policy.

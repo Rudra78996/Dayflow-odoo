@@ -303,7 +303,6 @@ async function main() {
         paid: true,
         color: '#7C5AA6',
         entitlement: 7,
-        attachmentAfterUnits: 2,
       },
       {
         code: 'UNPAID',
@@ -326,7 +325,6 @@ async function main() {
           name: definition.name,
           paid: definition.paid,
           color: definition.color,
-          attachmentAfterUnits: definition.attachmentAfterUnits,
           allowNegative: definition.allowNegative ?? false,
         },
         update: { active: true },
