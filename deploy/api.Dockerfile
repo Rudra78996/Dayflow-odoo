@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1.7
-FROM node:24-bookworm-slim@sha256:3638d9a6fe4030bd716be989438248074489337ba3275657f93595428be4fc03 AS production-dependencies
+FROM node:26-bookworm-slim@sha256:367679cf9792759492a486e4aa4b421764d71a9546a6dae8aab81a99eb797b3e AS production-dependencies
 WORKDIR /app
 RUN apt-get update \
   && apt-get install --yes --no-install-recommends ca-certificates openssl \
@@ -23,7 +23,7 @@ FROM build AS migration
 ENV NODE_ENV=production
 CMD ["npm", "run", "db:migrate:deploy", "--workspace", "@dayflow/api"]
 
-FROM node:24-bookworm-slim@sha256:3638d9a6fe4030bd716be989438248074489337ba3275657f93595428be4fc03 AS runtime
+FROM node:26-bookworm-slim@sha256:367679cf9792759492a486e4aa4b421764d71a9546a6dae8aab81a99eb797b3e AS runtime
 ENV NODE_ENV=production \
     API_PORT=3001
 WORKDIR /app
